@@ -34,9 +34,6 @@ export function SiteFooter() {
             <a href={`mailto:${siteProfile.email}`} className="block hover:text-[var(--hard-white)]">
               {siteProfile.email}
             </a>
-            <a href={`tel:${siteProfile.phone.replace(/[^\d+]/g, "")}`} className="block hover:text-[var(--hard-white)]">
-              {siteProfile.phone}
-            </a>
             <p>{siteProfile.location}</p>
           </div>
         </div>

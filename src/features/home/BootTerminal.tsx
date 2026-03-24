@@ -54,9 +54,11 @@ export function BootTerminal() {
         </div>
 
         <div className="space-y-5">
-          <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--cmu-red)]">Syntactic Brutalism / v1</p>
+          <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--cmu-red)]">
+            {siteProfile.name}
+          </p>
           <h1 className="max-w-4xl font-mono text-[2.8rem] font-semibold uppercase leading-[0.95] text-[var(--hard-white)] sm:text-[4.2rem] lg:text-[5.4rem]">
-            Terminal logic for biological systems and modern software.
+            Computational biology, AI systems, and research tooling.
           </h1>
           <p className="max-w-2xl font-reading text-lg leading-8 text-[var(--soft-white)]/82">
             {siteProfile.tagline}

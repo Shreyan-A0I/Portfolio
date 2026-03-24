@@ -288,7 +288,7 @@ export function KanbanWorkspace() {
                       type="password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
-                      className="terminal-cursor min-w-0 flex-1 border-[3px] border-[var(--hard-white)] bg-[var(--terminal-void)] px-4 py-3 font-mono text-sm text-[var(--hard-white)] outline-none focus:border-[var(--bio-cyan)]"
+                      className="min-w-0 flex-1 border-[3px] border-[var(--hard-white)] bg-[var(--terminal-void)] px-4 py-3 font-mono text-sm text-[var(--hard-white)] outline-none focus:border-[var(--bio-cyan)]"
                       placeholder="Unlock board edits"
                     />
                     <button type="submit" className="border-[3px] border-[var(--hard-white)] bg-[var(--syntax-yellow)] px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.24em] text-[var(--terminal-void)] shadow-neubrutal-yellow transition-transform duration-200 hover:-translate-y-0.5">
