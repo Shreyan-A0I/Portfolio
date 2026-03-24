@@ -254,7 +254,7 @@ export function KanbanWorkspace() {
             <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--cmu-red)]">Kanban Gateway</p>
             <h1 className="mt-3 font-reading text-4xl font-semibold text-[var(--hard-white)]">Public board, private edits.</h1>
             <p className="mt-4 font-reading text-base leading-7 text-[var(--soft-white)]/78">
-              Anyone can inspect the current working surface. Editing stays behind a password, and writes are debounced so drag-and-drop remains fast before the board syncs to Blob.
+              Anyone can inspect the current working surface. When editing is available, changes save in the background after movement settles so drag-and-drop still feels immediate.
             </p>
           </div>
 
@@ -267,9 +267,9 @@ export function KanbanWorkspace() {
             </div>
 
             <div className="mt-5 space-y-3 font-reading text-sm leading-6 text-[var(--soft-white)]/76">
-              <p>Auth configured: {passwordConfigured ? "yes" : "no"}</p>
-              <p>Blob configured: {storageConfigured ? "yes" : "no"}</p>
-              <p>Edit mode: {editable ? "unlocked" : "locked"}</p>
+              <p>Board access: public viewing</p>
+              <p>Edit mode: {editable ? "unlocked" : passwordConfigured ? "locked" : "unavailable"}</p>
+              <p>Sync status: {storageConfigured ? "connected" : "offline on this deployment"}</p>
             </div>
 
             {passwordConfigured ? (
@@ -300,7 +300,7 @@ export function KanbanWorkspace() {
               )
             ) : (
               <p className="mt-6 font-reading text-sm leading-6 text-[var(--soft-white)]/72">
-                Set `KANBAN_ADMIN_PASSWORD` to enable editing. Without it, the board remains public and read only.
+                Editing is not enabled on this deployment yet. The board remains public to view.
               </p>
             )}
           </div>
