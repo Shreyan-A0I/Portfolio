@@ -1,0 +1,18 @@
+{
+  "name": "Inference Engineering",
+  "slug": "inference-engineering",
+  "icon": "Zap",
+  "tagline": "Making ML practical—from research models to deployed systems.",
+  "description": "Production inference optimization, model quantization, latency reduction, and hardware-aware acceleration. Building systems where model capability meets deployment constraints.",
+  "skills": [
+    "Model Quantization",
+    "TensorRT",
+    "ONNX",
+    "Latency Optimization",
+    "Edge Deployment",
+    "Batch Processing",
+    "GPU Acceleration",
+    "Performance Tuning"
+  ],
+  "color": "#d97706"
+}

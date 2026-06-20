@@ -1,0 +1,18 @@
+{
+  "name": "Systems & Tooling",
+  "slug": "systems-tooling",
+  "icon": "Wrench",
+  "tagline": "Building infrastructure that researchers and engineers trust.",
+  "description": "Data pipelines, scientific software, reproducible workflows, and internal tooling. Systems engineering that enables others to do their best work. Emphasis on clarity, testing, and maintainability.",
+  "skills": [
+    "Data Pipelines",
+    "Workflow Automation",
+    "Version Control",
+    "Documentation",
+    "Testing & Validation",
+    "CI/CD",
+    "Database Design",
+    "API Design"
+  ],
+  "color": "#6366f1"
+}
