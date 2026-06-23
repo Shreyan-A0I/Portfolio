@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+  
+  /* Old theme colors (default) */
+  --bg-primary: #000000;
+  --bg-secondary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #6b6b6b;
+  --text-gradient-from: #ffffff;
+  --text-gradient-via: #6b6b6b;
+  --text-gradient-to: #581c87;
+  --accent-primary: #1e3a8a;
+  --accent-secondary: #581c87;
+  --accent-navy: #000080;
+}
+
+/* New theme colors */
+[data-theme="new"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-gradient-from: #06b6d4;
+  --text-gradient-via: #8b5cf6;
+  --text-gradient-to: #a78bfa;
+  --accent-primary: #06b6d4;
+  --accent-secondary: #14b8a6;
+  --accent-highlight: #fbbf24;
+  --accent-violet: #8b5cf6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+}
+
+@font-face {
+  font-family: 'PPNeueMontreal-Bold';
+  src: url('/fonts/PPNeueMontreal-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.animate-drop-in {
+  animation: drop-in .5s cubic-bezier(.21,1.02,.85,.96)
+}
+
+.no-scroll {
+  overflow: hidden;
+}

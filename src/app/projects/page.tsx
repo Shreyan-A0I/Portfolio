@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import SectionHeader from "@/components/shared/SectionHeader";
-import Tag from "@/components/shared/Tag";
+import ProjectCard from "@/components/projects/ProjectCard";
 import { projectCatalog } from "@/lib/project-catalog";
 
 export const metadata: Metadata = {
@@ -19,23 +18,17 @@ export default function ProjectsPage() {
           subtitle="A running index of projects mapped across computational biology, AI systems, and research tooling domains."
         />
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
-          {projectCatalog.map((project) => (
-            <Link
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projectCatalog.map((project, index) => (
+            <ProjectCard
               key={project.slug}
-              href={`/projects/${project.slug}`}
-              className="rounded-[1.9rem] border border-border-subtle bg-card/74 p-6 transition hover:border-accent-amber/35"
-            >
-              <Tag variant="metric">{project.category}</Tag>
-              <h2 className="mt-5 text-2xl text-text-primary">{project.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-text-secondary">{project.description}</p>
-              <p className="mt-5 text-lg text-accent-amber">{project.headlineMetric}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.tech.slice(0, 3).map((item) => (
-                  <Tag key={item}>{item}</Tag>
-                ))}
-              </div>
-            </Link>
+              slug={project.slug}
+              title={project.title}
+              description={project.description}
+              headlineMetric={project.headlineMetric}
+              tech={project.tech}
+              category={project.category}
+            />
           ))}
         </div>
       </div>

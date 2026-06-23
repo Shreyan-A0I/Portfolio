@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "portfolio-v0", "Context"]
+  "exclude": ["node_modules", "portfolio-v0", "Context", "reference1", "reference2"]
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SectionHeader from "@/components/shared/SectionHeader";
 import Tag from "@/components/shared/Tag";
+import ProjectCard from "@/components/projects/ProjectCard";
 import { projectCatalog } from "@/lib/project-catalog";
 import { seo, greeting } from "@/lib/data";
 
@@ -54,30 +55,27 @@ export default function Home() {
             subtitle="A selection of ongoing work across computational biology, ML systems, and research tooling."
           />
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
             {featuredProjects.map((project) => (
-              <Link
+              <ProjectCard
                 key={project.slug}
-                href={`/projects/${project.slug}`}
-                className="polymath-card rounded-2xl p-6 transition hover:border-accent-amber/60"
-              >
-                <Tag variant="metric">{project.category}</Tag>
-                <h2 className="mt-4 text-2xl font-bold text-text-primary">
-                  {project.title}
-                </h2>
-                <p className="mt-3 text-sm leading-7 text-text-secondary">
-                  {project.description}
-                </p>
-                <p className="mt-4 text-lg font-semibold text-accent-amber">
-                  {project.headlineMetric}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.slice(0, 2).map((item) => (
-                    <Tag key={item}>{item}</Tag>
-                  ))}
-                </div>
-              </Link>
+                slug={project.slug}
+                title={project.title}
+                description={project.description}
+                headlineMetric={project.headlineMetric}
+                tech={project.tech}
+                category={project.category}
+              />
             ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/projects"
+              className="inline-block rounded-lg border border-accent-amber/40 bg-accent-amber/10 px-8 py-3 text-accent-amber transition hover:border-accent-amber/80 hover:bg-accent-amber/20 font-semibold"
+            >
+              View All Projects →
+            </Link>
           </div>
         </div>
       </section>
