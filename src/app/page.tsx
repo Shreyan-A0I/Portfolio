@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SectionHeader from "@/components/shared/SectionHeader";
-import Tag from "@/components/shared/Tag";
 import ProjectCard from "@/components/projects/ProjectCard";
-import ConstellationGraph from "@/components/hero/ConstellationGraph";
+import HeroHeader from "@/features/home/HeroHeader";
+import TranscriptionHero from "@/features/home/TranscriptionHero";
+import DomainStack from "@/features/home/DomainStack";
+import SystemBiography from "@/features/home/SystemBiography";
 import { projectCatalog } from "@/lib/project-catalog";
 import { seo } from "@/lib/data";
 
@@ -16,80 +18,13 @@ export default function Home() {
   const featuredProjects = projectCatalog.slice(0, 3);
 
   return (
-    <main className="overflow-x-clip pb-10">
-      {/* Hero */}
-      <section className="hero-overlay min-h-[88vh] px-6 py-16 sm:px-10 lg:px-12 flex items-center">
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="grid lg:grid-cols-[1fr_1fr] gap-16 items-center">
+    <main className="overflow-x-clip">
+      <HeroHeader />
+      <TranscriptionHero />
+      <DomainStack />
+      <SystemBiography />
 
-            {/* Left: Bio */}
-            <div>
-              <div className="mb-5 inline-block">
-                <Tag variant="default">MS Computational Biology · CMU · 2027</Tag>
-              </div>
-
-              <h1 className="mb-6 font-bold leading-tight text-text-primary">
-                Shreyan<br />Nalwad
-              </h1>
-
-              <p className="mb-8 max-w-xl text-lg text-text-secondary leading-relaxed">
-                MS Comp Bio @ CMU. Research in Zhao Biophotonics Lab, currently working
-                on in-silico multiplexing — building diffusion models that let microscopes
-                see more than their hardware allows. I love building tools, learning from
-                collaborations, and finding the next interesting problem at the edge of
-                biology and compute.
-              </p>
-
-              <div className="mb-8 flex flex-wrap gap-2">
-                {["Generative AI", "Graph ML", "Spatial Omics", "Edge Inference", "Sequence ML"].map(
-                  (tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-border-subtle px-3 py-1 text-xs text-text-secondary hud-text"
-                    >
-                      {tag}
-                    </span>
-                  )
-                )}
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/projects"
-                  className="interactive-link rounded-lg border border-accent-amber/40 bg-accent-amber/10 px-6 py-3 text-accent-amber transition hover:border-accent-amber/80 hover:bg-accent-amber/20"
-                >
-                  View Projects
-                </Link>
-                <Link
-                  href="/resume"
-                  className="interactive-link rounded-lg border border-border-subtle bg-surface/40 px-6 py-3 text-text-primary transition hover:border-text-primary/50"
-                >
-                  Resume
-                </Link>
-                <a
-                  href="https://github.com/Shreyan-A0I"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="interactive-link rounded-lg border border-border-subtle bg-surface/40 px-6 py-3 text-text-primary transition hover:border-text-primary/50"
-                >
-                  GitHub
-                </a>
-              </div>
-            </div>
-
-            {/* Right: Constellation */}
-            <div className="hidden lg:flex flex-col items-center gap-4">
-              <ConstellationGraph />
-              <p className="hud-text text-text-secondary opacity-50">
-                hover a domain to explore connections
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Projects */}
+      {/* ── Featured Projects ── */}
       <section className="px-6 py-20 sm:px-10 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
@@ -97,8 +32,7 @@ export default function Home() {
             title="Recent Projects"
             subtitle="A selection of ongoing work across computational biology, ML systems, and research tooling."
           />
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredProjects.map((project) => (
               <ProjectCard
                 key={project.slug}
@@ -111,11 +45,10 @@ export default function Home() {
               />
             ))}
           </div>
-
           <div className="mt-12 text-center">
             <Link
               href="/projects"
-              className="inline-block rounded-lg border border-accent-amber/40 bg-accent-amber/10 px-8 py-3 text-accent-amber transition hover:border-accent-amber/80 hover:bg-accent-amber/20 font-semibold"
+              className="inline-block rounded-lg border border-accent-amber/40 bg-accent-amber/10 px-8 py-3 font-semibold text-accent-amber transition hover:border-accent-amber/80 hover:bg-accent-amber/20"
             >
               View All Projects →
             </Link>
@@ -123,8 +56,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="editorial-panel mx-6 rounded-2xl px-8 py-12 sm:mx-10 lg:mx-12">
+      {/* ── CTA ── */}
+      <section className="editorial-panel mx-6 mb-10 rounded-2xl px-8 py-12 sm:mx-10 lg:mx-12">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 text-3xl font-bold text-text-primary">
             Let&apos;s Build Something
@@ -132,7 +65,7 @@ export default function Home() {
           <p className="mb-8 text-text-secondary">
             Interested in computational biology, generative AI, or edge ML systems? Reach out.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             <a
               href="mailto:shreyan.nalwad@gmail.com"
               className="inline-block rounded-lg border border-text-primary px-6 py-3 text-text-primary transition hover:bg-text-primary hover:text-obsidian"

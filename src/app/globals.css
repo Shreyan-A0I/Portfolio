@@ -203,6 +203,13 @@
 }
 
 @layer utilities {
+  .landing-grid {
+    background-image:
+      linear-gradient(to right, #27272a 1px, transparent 1px),
+      linear-gradient(to bottom, #27272a 1px, transparent 1px);
+    background-size: 4rem 4rem;
+  }
+
   .command-grid {
     background-image:
       linear-gradient(to right, rgb(212 160 83 / 0.08) 1px, transparent 1px),
