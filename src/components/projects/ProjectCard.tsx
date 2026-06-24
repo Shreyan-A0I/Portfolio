@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Tag from '@/components/shared/Tag';
+import { getProjectGradient } from '@/lib/project-color';
 
 interface ProjectCardProps {
   slug: string;
@@ -25,20 +26,6 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getThumbnailColor = (index: number) => {
-    const colors = [
-      'from-blue-600 to-cyan-600',
-      'from-purple-600 to-pink-600',
-      'from-green-600 to-emerald-600',
-      'from-orange-600 to-red-600',
-      'from-indigo-600 to-blue-600',
-      'from-rose-600 to-pink-600',
-      'from-amber-600 to-orange-600',
-      'from-teal-600 to-cyan-600',
-      'from-violet-600 to-purple-600',
-    ];
-    return colors[index % colors.length];
-  };
 
   return (
     <Link href={`/projects/${slug}`}>
@@ -49,7 +36,7 @@ export default function ProjectCard({
       >
         {/* Thumbnail Background */}
         <div
-          className={`relative h-40 md:h-56 bg-gradient-to-br ${getThumbnailColor(title.charCodeAt(0))} overflow-hidden transition-transform duration-500 ${
+          className={`relative h-40 md:h-56 bg-gradient-to-br ${getProjectGradient(title)} overflow-hidden transition-transform duration-500 ${
             isHovered ? 'scale-110' : 'scale-100'
           }`}
         >
