@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 
 // ── Strand sequences ─────────────────────────────────────────────────────────
 const N = 34;
@@ -232,18 +231,40 @@ export default function HelixEntry() {
         </p>
       </div>
 
-      {/* ── Bottom CTA ── */}
-      <div className="relative z-10 mt-auto px-8 pb-10 sm:px-14 flex items-end justify-between">
-        <div className="font-mono text-[10px] text-white/15 leading-relaxed">
-          <span className="text-[#00E5FF]/30">● </span>A/T/G/C<br />
-          <span className="text-white/25">● </span>0xFF/0x1A/…
-        </div>
-        <Link
-          href="/projects"
-          className="font-mono text-xs text-white/30 transition-colors hover:text-[#00E5FF] tracking-widest"
+      {/* ── Centered enter CTA ── */}
+      <div className="relative z-10 mt-auto mb-10 flex flex-col items-center gap-3">
+        <button
+          onClick={() =>
+            document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="group flex flex-col items-center gap-2 cursor-pointer"
+          aria-label="Enter portfolio"
         >
-          explore →
-        </Link>
+          <span className="font-mono text-[11px] tracking-[0.4em] text-white/30 uppercase transition-colors group-hover:text-[#00E5FF]/70">
+            enter portfolio
+          </span>
+          {/* Pulsing line */}
+          <span className="relative block h-8 w-px overflow-hidden">
+            <span className="absolute inset-0 bg-gradient-to-b from-[#00E5FF]/50 to-transparent animate-pulse" />
+          </span>
+          {/* Arrow */}
+          <svg
+            className="h-3.5 w-3.5 text-white/20 transition-colors group-hover:text-[#00E5FF]/60 -mt-1"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* ── Legend ── */}
+      <div className="relative z-10 absolute bottom-4 right-8 font-mono text-[9px] text-white/12 leading-relaxed text-right hidden sm:block">
+        <span className="text-[#00E5FF]/25">●</span> A · T · G · C
+        <br />
+        <span className="text-white/20">●</span> 0xFF · 0x1A · …
       </div>
     </section>
   );

@@ -37,7 +37,12 @@ export default function AboutPage() {
 
             <h3 className="text-lg font-bold text-text-primary">Background</h3>
             <p>
-              I've worked at scale on problems in biomedical ML, built production systems at Phenom and BYJU'S, and contributed to research in deep learning and epidemiology. Location-wise, I move between Pittsburgh and Hyderabad.
+              Currently a Research Assistant at Zhao Biophotonics Lab (CMU), building
+              diffusion models for in-silico fluorescence multiplexing. Previously at
+              Vyuhaa Med Data in Hyderabad, where I developed CerviAI — a cervical cancer
+              detection pipeline using YOLOv11 on Whole Slide Imaging — and led deployment
+              of an Edge AI-enabled live WSI microscope scanner on Jetson Orin Nano, cutting
+              inference latency 6×. Location-wise, I move between Pittsburgh and Hyderabad.
             </p>
 
             <p>
