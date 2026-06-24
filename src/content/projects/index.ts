@@ -35,51 +35,33 @@ export const projectContent: Record<string, ProjectDetailContent> = {
     ],
   },
 
-  "jetson-optimization": {
-    sections: [
-      {
-        title: "Running Pathology AI at the Clinical Edge",
-        paragraphs: [
-          "Clinical pathology AI typically runs in the cloud — you send a whole slide image up, wait for inference, get results back. That works in well-resourced hospitals. It doesn't work in low-resource settings, during connectivity outages, or anywhere that patient data can't leave the facility. The Jetson Orin Nano is NVIDIA's edge compute platform: roughly the size and cost of a paperback book, but capable of running serious deep learning inference without a cloud connection.",
-          "The bottleneck was time. The initial pipeline took ~500 seconds per slide. At that speed, it's a research tool, not a clinical one. The goal was to bring that under 90 seconds — the threshold for practical intraoperative use.",
-        ],
-      },
-      {
-        title: "The 3-Stage Pipeline",
-        paragraphs: [
-          "Whole slide images are enormous — a single WSI can be 100,000 × 100,000 pixels. You can't pass that directly to a model. The pipeline breaks it into three stages: first, a lightweight detection model (YOLOv11) identifies candidate regions containing abnormal cells; second, a classifier scores each candidate and prunes low-confidence regions; third, a segmentation model runs only on the surviving high-confidence patches. Each stage reduces the search space for the next.",
-          "The latency problem came from how OpenSlide (the WSI parsing library) was being used. The original code reopened file handles repeatedly and ran patch extraction sequentially. Switching to persistent handles and parallelizing extraction across cores dropped the per-slide time from 500s to 80s — a 6× improvement with no change to model architecture.",
-        ],
-      },
-      {
-        title: "Active Learning in the Loop",
-        paragraphs: [
-          "A deployed model that never updates is a model that gets stale. We formalized an active learning feedback loop: the model flags cases where it's uncertain, an in-house pathologist reviews those cases as the oracle, and their annotations get automatically converted into new training batches. This means the model improves continuously from real clinical cases without requiring manual data engineering between cycles.",
-        ],
-      },
-    ],
-  },
-
   cerviai: {
     sections: [
       {
-        title: "Cervical Cancer Screening at Scale",
+        title: "The Product: Live Inference on a Prototype WSI Scanner",
         paragraphs: [
-          "Cervical cancer is one of the most preventable cancers with early detection — but manual screening of Pap smear slides is labor-intensive and subject to inter-pathologist variability. Automated cell detection on Whole Slide Images can make screening faster and more consistent, particularly in high-volume clinical settings.",
-          "CerviAI is the detection and classification pipeline I built and maintain at Vyuhaa Med Data. It operates on clinical-grade WSIs, identifying abnormal cervical cells across slides that can span gigapixels.",
+          "CerviAI isn't a standalone model — it's the AI layer of a full prototype product built at Vyuhaa Med Data: a WSI scanner that physically moves across cervical Pap smear slides while CerviAI runs inference concurrently. The scanner stitches tiles as the arm moves; CerviAI processes them as they arrive, flagging suspicious regions before the scan is even complete. Building AI that operates in the physical world — synchronized with hardware, constrained by real-time budgets — is a different problem from training a model in a notebook.",
+          "Cervical cancer is one of the most preventable cancers with early detection, but manual cytology review is labor-intensive and subject to inter-pathologist variability. An automated pipeline running on low-cost edge hardware extends screening capacity to high-volume or resource-limited settings.",
         ],
       },
       {
-        title: "YOLOv7 → YOLOv11 Migration",
+        title: "The 3-Stage Cascade",
         paragraphs: [
-          "The original pipeline used YOLOv7. Migrating to YOLOv11 wasn't just a version bump — it required re-engineering the data loading, anchor configuration, and post-processing to match the new architecture. The result: precision improved to 90% and recall increased by 10×. The recall improvement matters clinically; missing abnormal cells (false negatives) is worse than flagging extra patches for human review.",
-          "The pipeline adds targeted patch-centering after initial detection: once a candidate region is identified, the model crops a tighter patch centered on the detection before passing it to the classifier and segmenter. This removes irrelevant background context and improves classification accuracy on edge cases.",
+          "Whole slide images are enormous — a single WSI can be 100,000 × 100,000 pixels. The pipeline breaks analysis into three stages: first, a YOLOv11 detection model identifies candidate regions containing abnormal cells; second, a classifier scores each candidate and prunes low-confidence regions via targeted patch-centering (tight crops remove irrelevant background context); third, a segmentation model runs only on the surviving high-confidence patches. Each stage prunes the search space for the next — segmentation, the most expensive stage, only sees roughly 5% of the original slide area.",
+          "The migration from YOLOv7 to YOLOv11 required re-engineering data loading, anchor configuration, and NMS post-processing — not just a version bump. Result: precision improved to 90%, recall improved by 10×. The recall gain matters clinically — false negatives (missed abnormal cells) carry higher risk than false positives.",
         ],
       },
       {
-        title: "Active Learning With a Pathologist Oracle",
+        title: "Edge Deployment: 500s → 80s on Jetson Orin Nano",
         paragraphs: [
-          "Model performance in clinical settings degrades as real-world data diverges from training distribution — new staining protocols, different slide preparations, scanner variation. To stay current, we implemented an active learning loop: the model isolates negative-sample tissue artifacts it's uncertain about, a pathologist reviews them, and their labels feed directly into new training batches. This makes the annotation pipeline continuous rather than requiring periodic large-scale relabeling campaigns.",
+          "The full 3-stage pipeline runs on NVIDIA Jetson Orin Nano — roughly the size and cost of a paperback book. At 500 seconds per slide, it was a research tool, not a clinical one. The optimization goal: under 90 seconds for practical intraoperative use.",
+          "The bottleneck was how OpenSlide (the WSI parsing library) was being used. The original code reopened file handles on every tile access and ran patch extraction sequentially. Switching to persistent handles and parallelizing patch extraction across CPU cores dropped the per-slide time from 500s to 80s — a 6× improvement with no change to model architecture. No clever quantization required; just eliminating unnecessary I/O overhead.",
+        ],
+      },
+      {
+        title: "Active Learning Loop",
+        paragraphs: [
+          "A deployed model that never updates degrades as clinical data drifts — new staining protocols, scanner firmware, different slide preparations. The active learning loop keeps it current: the model flags uncertain cases (low softmax confidence or stage disagreement), an in-house pathologist reviews them as oracle, and labels automatically convert into new training batches. Continuous annotation rather than periodic large-scale relabeling campaigns.",
         ],
       },
     ],
@@ -204,10 +186,17 @@ export const projectContent: Record<string, ProjectDetailContent> = {
   "cmv-immunology": {
     sections: [
       {
+        title: "Context: ML Course Project on Real Data",
+        paragraphs: [
+          "This was a course project for a machine learning course. The task: implement multiple classification methods on a large, real-world dataset. Most groups worked on standard benchmarks; this project went to CellxGene and pulled the MESA (Multi-Ethnic Study of Atherosclerosis) cohort — a longitudinal cardiovascular study that happened to collect single-cell RNA-seq alongside CMV serology from thousands of donors. Real data, real class labels, real noise.",
+          "Five methods were implemented (the requirement was three). The fifth method — donor-level pseudobulking — wasn't in the course syllabus but turned out to be a necessary statistical correction once the within-donor correlation structure of single-cell data became apparent.",
+        ],
+      },
+      {
         title: "What Is CMV and Why Does It Matter Immunologically",
         paragraphs: [
           "Cytomegalovirus (CMV) is a herpesvirus that infects 40–90% of adults globally, establishing lifelong latency. While asymptomatic in most healthy individuals, CMV profoundly reshapes the immune system — chronic infection drives the expansion of highly differentiated, antigen-specific T cells and NK cells, a phenomenon linked to accelerated immune aging. Understanding the CMV immune fingerprint at single-cell resolution informs transplant risk stratification, immunotherapy design, and aging research.",
-          "The specific question this project asks: given single-cell RNA-seq profiles from blood, can we predict whether a donor is CMV-positive? And which cell populations and genes carry the signal?",
+          "The specific question: given single-cell RNA-seq profiles from blood, can we predict whether a donor is CMV-positive? And which cell populations and genes carry the signal?",
         ],
       },
       {
@@ -218,9 +207,10 @@ export const projectContent: Record<string, ProjectDetailContent> = {
         ],
       },
       {
-        title: "KLRD1 and the NK Cell Connection",
+        title: "KLRD1, Gene Importance by Ethnicity, and NK Cell Biology",
         paragraphs: [
           "The standout finding from the logistic regression: KLRD1 (killer cell lectin-like receptor D1, also known as CD94) consistently emerged as a top predictor of CMV-positive donor status. KLRD1 is a surface marker of NKG2-expressing NK cells and effector T cells — exactly the population known to expand under chronic CMV infection. Its appearance as a leading predictor validates that the model is capturing real immunobiology, not a statistical artifact.",
+          "The ethnicity classification (Method 3 — XGBoost predicting donor demographic group from gene expression) surfaced a second finding: gene importance scores differed meaningfully by ethnicity. Some genes that seemed to predict CMV status were actually proxying demographic variance. The ethnicity model exposed which features the CMV classifier should treat with skepticism. This is the less headline-grabbing result, but probably the more scientifically careful one.",
           "Donor-level pseudobulking addresses a core statistical problem in single-cell analysis: cells from the same donor are not independent observations. Standard per-cell classification inflates effective sample size and produces overconfident results. Pseudobulking — aggregating all cells from a donor into a single pseudo-sample — correctly treats each donor as the unit of analysis.",
         ],
       },
@@ -288,9 +278,31 @@ export const projectContent: Record<string, ProjectDetailContent> = {
   "inv-shaf": {
     sections: [
       {
-        title: "Overview",
+        title: "The Problem: Cheap Images, Expensive Ground Truth",
         paragraphs: [
-          "Inv-SHAF (Invariant Spatial Histology Analysis Framework) is an ongoing collaborative project with Dylan Setiawan focused on advanced spatial analysis of histological tissue images. The project is in active development — detailed write-up coming soon.",
+          "H&E (hematoxylin and eosin) staining is the workhorse of histopathology — cheap, fast, and routinely available. Spatial transcriptomics tells you not just what genes are expressed in a tissue, but where — which cells, which spatial niches. It's also expensive, technically demanding, and not routinely available. The premise of ALIAS: if a model can infer spatially-resolved gene expression from H&E morphology alone, spatial transcriptomics becomes accessible anywhere a microscope exists.",
+          "This was the automation course project — the specific assignment was to implement active learning strategies on a real problem. Spatial transcriptomics provided a maximally hard version of the problem: the data is sparse, spatially correlated, and the most informative spots to label are not the ones standard uncertainty sampling would pick.",
+        ],
+      },
+      {
+        title: "Architecture: Multi-Head + Gradient Reversal Layer",
+        paragraphs: [
+          "The encoder takes H&E image patches and maps them to a shared bottleneck embedding (128→256 dimensions, scaled to accommodate the UNI vision foundation model backbone). Two heads branch from this embedding: a gene predictor trained with MSE loss on spatial gene expression values, and a domain discriminator trained with CE loss to predict which slide/batch the patch came from.",
+          "The Gradient Reversal Layer (GRL) sits between the encoder and the domain discriminator. During forward pass: identity. During backprop: it negates the gradient sign before passing it to the encoder. The encoder must learn to predict gene expression well (gene predictor gradient) while simultaneously producing features that confuse the domain discriminator (reversed discriminator gradient). The result is a batch-invariant representation — features that can't be used to identify which slide preparation, staining protocol, or scanner produced the patch. Loss balance: β=1.0 between gene predictor (MSE) and domain discriminator (CE).",
+        ],
+      },
+      {
+        title: "Custom Active Learning on Spatial Data",
+        paragraphs: [
+          "Standard uncertainty sampling selects the samples a model is least confident about. On spatial transcriptomics, this fails: spots are spatially autocorrelated — the model's uncertainty at one spot is highly predictive of its uncertainty at neighboring spots. Querying nearby uncertain spots is redundant; you spend your annotation budget on correlated samples that teach the model nothing new.",
+          "ALIAS implements custom active learning strategies that query spots which are both uncertain AND spatially diverse — maximizing expected information gain per annotation. The course context was specifically about extending AL theory to non-standard settings, and designing a query strategy for spatially structured data with extreme sparsity was the novel contribution.",
+        ],
+      },
+      {
+        title: "The Data Quality Breakthrough",
+        paragraphs: [
+          "Initial performance was very poor (PCC ~0.018). The investigation: many target genes were expressed in fewer than 1% of spots — effectively zero signal for the model to learn from, just noise. The fix was data-centric rather than architecture-centric: restrict gene selection to genes with >20% occupancy across all spots.",
+          "This single change moved average non-zero occupancy from 42% to 78% and minimum occupancy from 0.16% to 24%. It also eliminated the need for 'stability hacks' — target clipping, tiny loss weights, aggressive regularization — that had been papering over the signal quality problem. The model became fundamentally more robust once the targets had real signal.",
         ],
       },
     ],

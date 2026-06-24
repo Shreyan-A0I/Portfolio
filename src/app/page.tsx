@@ -14,7 +14,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const featuredProjects = projectCatalog.slice(0, 3);
+  const featuredProjects = ["cerviai", "nustain", "inv-shaf"]
+    .map((slug) => projectCatalog.find((p) => p.slug === slug))
+    .filter((p): p is NonNullable<typeof p> => !!p);
 
   return (
     <main className="overflow-x-clip pb-10">
