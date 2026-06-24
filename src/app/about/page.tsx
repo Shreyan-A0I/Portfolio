@@ -21,14 +21,15 @@ export default function AboutPage() {
           <div className="space-y-6 text-text-secondary leading-relaxed">
 
             <p>
-              Both my parents are doctors — my mother is a laparoscopic gynecologist,
-              my father a pathologist. Growing up, biology wasn&apos;t abstract; it was
-              conversation at dinner. When I found computation, I found a second lens
-              for the same kind of problems: high-stakes, complex data, real consequences.
-              That&apos;s what keeps pulling me back. Comp bio sits at the intersection of
-              the most unique data in all of machine learning and problems that can
-              eventually change outcomes for real people — in cancer detection, in drug
-              discovery, in how we understand disease at a molecular level.
+              Both my parents are doctors — my mother is a cancer pathologist, my father
+              a laparoscopic gynecologist. Growing up accompanying my mom to the lab,
+              being around hospitals from an early age, kept medicine close. When I found
+              computation, I found a second lens for the same kind of problems: high-stakes,
+              complex data, real consequences. That&apos;s what keeps pulling me back.
+              Comp bio sits at the intersection of the most unique data in all of machine
+              learning and problems that can eventually change outcomes for real people —
+              in cancer diagnosis, in drug discovery, in how we understand disease at a
+              molecular level.
             </p>
 
             <p>

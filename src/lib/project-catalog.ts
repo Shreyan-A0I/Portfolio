@@ -216,6 +216,26 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     title: "Inv-SHAF — Spatial Histology Analysis",
   },
   {
+    category: "TRANSCRIPTOMICS",
+    description:
+      "Single-cell RNA-seq analysis of the CMV infection immune footprint in the MESA cohort — 5-method pipeline from unsupervised clustering to cascaded Bayesian priors.",
+    longDescription:
+      "Analyzes whether single-cell gene expression profiles from blood can predict Cytomegalovirus (CMV) infection status in donors. Using the MESA cohort scRNA-seq data, five progressive methods were implemented: PCA/UMAP unsupervised clustering to validate cell-type structure, regularized logistic regression identifying KLRD1 as a top CMV predictor gene, XGBoost ethnicity classification as a confound control, and cascaded Bayesian priors with donor-level pseudobulking to aggregate noisy single-cell signal to robust donor-level predictions.",
+    highlights: [
+      "KLRD1 (CD94, NK cell marker) surfaces as top predictor of CMV-positive donor status",
+      "Ethnicity XGBoost control ensures CMV signature isn't proxying demographic variance",
+      "Donor-level pseudobulking corrects for within-donor cell non-independence",
+      "Cascaded Bayesian priors for noise-robust single-cell → donor-level classification",
+      "5-method progressive pipeline on MESA cohort scRNA-seq (train.h5ad / val.h5ad)",
+    ],
+    domains: ["transcriptomics", "biological-systems", "immunology", "single-cell"],
+    headlineMetric: "KLRD1 as CMV predictor · 5-method scRNA pipeline",
+    slug: "cmv-immunology",
+    status: "research",
+    tech: ["Python", "scanpy", "AnnData", "UMAP", "PCA", "XGBoost", "scikit-learn", "Bayesian Methods"],
+    title: "CMV Immune Fingerprint — scRNA-seq",
+  },
+  {
     category: "FULL-STACK",
     description:
       "Food alternative recommendation tool quantifying sustainability impact across carbon emissions, water usage, land use, and biodiversity.",

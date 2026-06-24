@@ -185,10 +185,43 @@ export const projectContent: Record<string, ProjectDetailContent> = {
         ],
       },
       {
-        title: "Results and Recognition",
+        title: "The Memphis / San Diego Simulation",
         paragraphs: [
-          "The federated model successfully stratified patients into 3 distinct risk clusters using the combined WSI + RNA-seq representations. AWS S3 was used for standardized data retrieval across federated sites. The project was built by an 11-person team using NVFlare (NVIDIA's federated learning framework) — I led the multimodal fusion technical design.",
-          "The team won Best Collaboration Award at the federated learning competition, recognizing the coordination across a large distributed team and the technical quality of the multimodal fusion approach.",
+          "The federated setup simulates a real-world data access inequality: San Diego Hospital has twice the patients and two modalities (clinical + RNA-seq); Memphis Hospital has only clinical data. MuFFLe handles this via modality dropout — when a site lacks RNA-seq, the model zeros out the RNA-seq encoder embedding, telling the attention layer to ignore it. When Memphis eventually gains sequencing capability, no architecture change is needed; the site starts feeding data through the RNA-seq encoder that was already there.",
+          "The per-modality gating weights are learned and directly interpretable as importance scores: which modality drove each patient's risk prediction, morphological (WSI) or molecular (RNA-seq). Attention heatmaps on WSI patches show the model focusing on morphologically complex regions — tumor nests, areas of high cellular pleomorphism — rather than background stroma, consistent with what a pathologist would examine.",
+        ],
+      },
+      {
+        title: "Results: CHIMERA Bladder Cancer Dataset",
+        paragraphs: [
+          "The proof-of-concept runs on the CHIMERA Challenge Task 3 dataset: 176 bladder cancer patients, clinical features + RNA-seq, binary recurrence prediction. The heuristic-based multimodal approach stratified patients into 3 distinct risk clusters. Cluster 2 exhibited the highest recurrence risk; Kaplan-Meier survival curves show visual separation between clusters. C-index: 0.5507 — modest but expected for an unsupervised approach on a small cohort. The 42M-parameter fusion model provides the supervised learning path for larger datasets.",
+          "AWS S3 was used for standardized data retrieval across federated sites. The project was built by an 11-person team using NVFlare (NVIDIA's federated learning framework) — I led the multimodal fusion technical design. The team won Best Collaboration Award, recognizing both the coordination across a large distributed team and the technical quality of the multimodal fusion architecture.",
+        ],
+      },
+    ],
+  },
+
+  "cmv-immunology": {
+    sections: [
+      {
+        title: "What Is CMV and Why Does It Matter Immunologically",
+        paragraphs: [
+          "Cytomegalovirus (CMV) is a herpesvirus that infects 40–90% of adults globally, establishing lifelong latency. While asymptomatic in most healthy individuals, CMV profoundly reshapes the immune system — chronic infection drives the expansion of highly differentiated, antigen-specific T cells and NK cells, a phenomenon linked to accelerated immune aging. Understanding the CMV immune fingerprint at single-cell resolution informs transplant risk stratification, immunotherapy design, and aging research.",
+          "The specific question this project asks: given single-cell RNA-seq profiles from blood, can we predict whether a donor is CMV-positive? And which cell populations and genes carry the signal?",
+        ],
+      },
+      {
+        title: "Dataset and 5-Method Pipeline",
+        paragraphs: [
+          "Data comes from the MESA (Multi-Ethnic Study of Atherosclerosis) cohort — a large longitudinal cardiovascular study that collected scRNA-seq alongside CMV serology. Processed files (train.h5ad, val.h5ad in AnnData format) contain single-cell gene expression profiles with donor-level CMV status labels.",
+          "Five methods were implemented in sequence. Method 1 used PCA and UMAP to validate that unsupervised clustering recovers known cell-type identities — confirming transcriptomic structure survives processing before supervised classification begins. Method 2 applied regularized logistic regression for binary CMV status prediction, surfacing individual genes whose expression predicts donor status. Method 3 used XGBoost to predict donor ethnicity from gene expression — a confound check ensuring the CMV signal isn't proxying demographic variance. Methods 4 and 5 addressed single-cell noise: cascaded Bayesian priors and donor-level pseudobulking aggregate noisy per-cell measurements into robust donor-level predictions.",
+        ],
+      },
+      {
+        title: "KLRD1 and the NK Cell Connection",
+        paragraphs: [
+          "The standout finding from the logistic regression: KLRD1 (killer cell lectin-like receptor D1, also known as CD94) consistently emerged as a top predictor of CMV-positive donor status. KLRD1 is a surface marker of NKG2-expressing NK cells and effector T cells — exactly the population known to expand under chronic CMV infection. Its appearance as a leading predictor validates that the model is capturing real immunobiology, not a statistical artifact.",
+          "Donor-level pseudobulking addresses a core statistical problem in single-cell analysis: cells from the same donor are not independent observations. Standard per-cell classification inflates effective sample size and produces overconfident results. Pseudobulking — aggregating all cells from a donor into a single pseudo-sample — correctly treats each donor as the unit of analysis.",
         ],
       },
     ],
