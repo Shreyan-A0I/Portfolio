@@ -25,6 +25,8 @@
 *.pem
 portfolio-v0/
 Context/
+reference1/
+reference2/
 
 # debug
 npm-debug.log*
