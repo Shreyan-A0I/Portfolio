@@ -11,9 +11,19 @@ interface FeedEntry {
   tag: string;
   title: string;
   paragraphs: string[];
+  gif?: string;
 }
 
 const entries: FeedEntry[] = [
+  {
+    date: "2026-06",
+    tag: "relatable",
+    title: "Ross: the most relatable character ever",
+    paragraphs: [
+      "that sandwich was the only good thing in his life. i get it ross. i get it.",
+    ],
+    gif: "/sandwich.gif",
+  },
   {
     date: "2026-06",
     tag: "research",
@@ -73,6 +83,12 @@ export default function FeedPage() {
                 {entry.title}
               </h2>
 
+              {entry.gif && (
+                <div className="mb-4 overflow-hidden rounded-xl border border-border-subtle">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={entry.gif} alt={entry.title} className="w-full max-w-md" />
+                </div>
+              )}
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 {entry.paragraphs.map((p, j) => (
                   <p key={j}>{p}</p>

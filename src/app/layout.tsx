@@ -37,8 +37,9 @@ export default function RootLayout({
         <Navbar />
         <div className="relative z-10 flex min-h-screen flex-col pt-24">
           <main className="flex-1">{children}</main>
-          <footer className="border-t border-border-subtle bg-surface/40 py-8 text-center text-text-secondary">
-            <p>&copy; 2024 Shreyan Nalwad. All rights reserved.</p>
+          <footer className="border-t border-border-subtle bg-surface/40 py-8 text-center text-text-secondary text-sm">
+            <p>&copy; 2026 Shreyan Nalwad &mdash; built with love, caffeine, and AI.</p>
+            <p className="mt-1 text-xs text-text-secondary/40">no sandwich was harmed in the making of this portfolio</p>
           </footer>
         </div>
         <Analytics />
