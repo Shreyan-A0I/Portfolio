@@ -1,5 +1,5 @@
-# ALIAS — Invariance-Aware Active Learning for Label-Efficient Spatial Gene Expression Prediction
-*(Also referred to as Inv-SHAF — Invariant Spatial Histology Analysis Framework)*
+# Inv-SHAF — Invariance-Aware Active Learning for Label-Efficient Spatial Gene Expression Prediction
+*(Invariant Spatial Histology Analysis Framework)*
 
 **Course:** Automation course with heavy focus on active learning  
 **Team:** Shreyan Nalwad (primary developer), Dylan Setiawan (collaboration)  
@@ -9,7 +9,7 @@
 
 ## High-Level Summary
 
-ALIAS predicts spatial gene expression from low-cost, standard H&E histology images — bridging the gap between cheap morphology staining and expensive spatial transcriptomics. The core research challenge: H&E images are routine and cheap; spatially-resolved gene expression is not. If a model can learn to infer *where* and *how much* each gene is expressed from pure image appearance, spatial transcriptomics can be applied far more widely.
+Inv-SHAF predicts spatial gene expression from low-cost, standard H&E histology images — bridging the gap between cheap morphology staining and expensive spatial transcriptomics. The core research challenge: H&E images are routine and cheap; spatially-resolved gene expression is not. If a model can learn to infer *where* and *how much* each gene is expressed from pure image appearance, spatial transcriptomics can be applied far more widely.
 
 Two key ideas drive the architecture:
 1. **Domain adversarial training** (Gradient Reversal Layer) to remove batch effects — making predictions invariant to slide preparation, staining protocol, and scanner differences
@@ -44,7 +44,7 @@ Standard active learning selects uncertain samples for labeling. On spatial tran
 - Gene expression is highly sparse (some genes expressed in <1% of spots)
 - The informativeness of a spot depends on its spatial neighborhood
 
-ALIAS implements custom active learning strategies that account for spatial structure, querying spots that are both uncertain AND spatially diverse — maximizing information gain per annotation budget. The course context was specifically about applying and extending AL concepts to non-standard problem settings, and spatial transcriptomics provided a maximally challenging one.
+Inv-SHAF implements custom active learning strategies that account for spatial structure, querying spots that are both uncertain AND spatially diverse — maximizing information gain per annotation budget. The course context was specifically about applying and extending AL concepts to non-standard problem settings, and spatial transcriptomics provided a maximally challenging one.
 
 ---
 

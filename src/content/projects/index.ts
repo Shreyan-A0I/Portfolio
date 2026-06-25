@@ -285,7 +285,7 @@ export const projectContent: Record<string, ProjectDetailContent> = {
       {
         title: "The Problem: Cheap Images, Expensive Ground Truth",
         paragraphs: [
-          "H&E (hematoxylin and eosin) staining is the workhorse of histopathology — cheap, fast, and routinely available. Spatial transcriptomics tells you not just what genes are expressed in a tissue, but where — which cells, which spatial niches. It's also expensive, technically demanding, and not routinely available. The premise of ALIAS: if a model can infer spatially-resolved gene expression from H&E morphology alone, spatial transcriptomics becomes accessible anywhere a microscope exists.",
+          "H&E (hematoxylin and eosin) staining is the workhorse of histopathology — cheap, fast, and routinely available. Spatial transcriptomics tells you not just what genes are expressed in a tissue, but where — which cells, which spatial niches. It's also expensive, technically demanding, and not routinely available. The premise of Inv-SHAF: if a model can infer spatially-resolved gene expression from H&E morphology alone, spatial transcriptomics becomes accessible anywhere a microscope exists.",
           "This was the automation course project — the specific assignment was to implement active learning strategies on a real problem. Spatial transcriptomics provided a maximally hard version of the problem: the data is sparse, spatially correlated, and the most informative spots to label are not the ones standard uncertainty sampling would pick.",
         ],
       },
@@ -300,7 +300,7 @@ export const projectContent: Record<string, ProjectDetailContent> = {
         title: "Custom Active Learning on Spatial Data",
         paragraphs: [
           "Standard uncertainty sampling selects the samples a model is least confident about. On spatial transcriptomics, this fails: spots are spatially autocorrelated — the model's uncertainty at one spot is highly predictive of its uncertainty at neighboring spots. Querying nearby uncertain spots is redundant; you spend your annotation budget on correlated samples that teach the model nothing new.",
-          "ALIAS implements custom active learning strategies that query spots which are both uncertain AND spatially diverse — maximizing expected information gain per annotation. The course context was specifically about extending AL theory to non-standard settings, and designing a query strategy for spatially structured data with extreme sparsity was the novel contribution.",
+          "Inv-SHAF implements custom active learning strategies that query spots which are both uncertain AND spatially diverse — maximizing expected information gain per annotation. The course context was specifically about extending AL theory to non-standard settings, and designing a query strategy for spatially structured data with extreme sparsity was the novel contribution.",
         ],
       },
       {

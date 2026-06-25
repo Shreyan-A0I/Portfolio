@@ -182,9 +182,9 @@ export const projectCatalog: ProjectCatalogEntry[] = [
   {
     category: "ACTIVE LEARNING",
     description:
-      "ALIAS: domain-adversarial active learning for spatial gene expression prediction from H&E histology. Gradient Reversal Layer removes batch effects; custom AL strategy accounts for spatial structure.",
+      "Inv-SHAF: domain-adversarial active learning for spatial gene expression prediction from H&E histology. Gradient Reversal Layer removes batch effects; custom AL strategy accounts for spatial structure.",
     longDescription:
-      "ALIAS (Invariance-Aware Active Learning for Label-Efficient Spatial Gene Expression Prediction) predicts spatially-resolved gene expression from standard H&E histology images — bridging cheap morphology staining and expensive spatial transcriptomics. A Gradient Reversal Layer (GRL) forces the encoder to learn batch-invariant representations decoupled from slide/staining artifacts. A custom active learning loop queries spatially diverse, uncertain spots to maximize annotation efficiency on this uniquely complex data type.",
+      "Inv-SHAF (Invariance-Aware Active Learning for Label-Efficient Spatial Gene Expression Prediction) predicts spatially-resolved gene expression from standard H&E histology images — bridging cheap morphology staining and expensive spatial transcriptomics. A Gradient Reversal Layer (GRL) forces the encoder to learn batch-invariant representations decoupled from slide/staining artifacts. A custom active learning loop queries spatially diverse, uncertain spots to maximize annotation efficiency on this uniquely complex data type.",
     highlights: [
       "Gradient Reversal Layer for domain-adversarial batch effect removal from slide/staining variation",
       "Custom active learning strategy accounting for spatial correlation structure of transcriptomic spots",
@@ -197,7 +197,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     slug: "inv-shaf",
     status: "research",
     tech: ["PyTorch", "Domain Adversarial Training", "Active Learning", "Spatial Transcriptomics", "H&E Histology", "UNI", "Python"],
-    title: "ALIAS — Spatial Gene Expression Prediction",
+    title: "Inv-SHAF — Spatial Gene Expression Prediction",
   },
   {
     category: "TRANSCRIPTOMICS",
