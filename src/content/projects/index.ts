@@ -14,29 +14,27 @@ export const projectContent: Record<string, ProjectDetailContent> = {
       {
         title: "The Multiplexing Problem in Expansion Microscopy",
         paragraphs: [
-          "The lab's MAGNIFY protocol (published in Nature) is an expansion microscopy technique that physically expands tissue samples for nanoscale-resolution imaging. Fluorescent markers light up specific proteins — ACTN4 marks podocyte injury in kidney, C3 marks complement deposition in glomeruli, GFP and TRITC in brain sections. The catch: antibody cross-reactivity and imaging time limits how many can be acquired simultaneously. A full multiplexed panel requires multiple sequential staining passes, with risk of tissue degradation and spatial drift between passes.",
-          "NuStain's bet: if the lab has paired training data where NHS (a structural protein stain that labels all cell boundaries) and a target marker were captured from the same tissue, a model can learn to synthesize the target from NHS alone. At inference time, a single NHS stain is enough to generate the entire virtual panel — no additional antibodies, no additional imaging passes.",
+          "The lab's MAGNIFY protocol (published in Nature) is an expansion microscopy technique that physically expands tissue samples for nanoscale-resolution imaging. Fluorescent markers reveal specific proteins — ACTN4 marks podocyte injury in kidney, C3 marks complement deposition in glomeruli. The catch: antibody cross-reactivity and imaging time limit how many channels can be acquired in a single pass. A full multiplexed panel requires sequential staining runs, with risk of tissue degradation and spatial drift between them.",
+          "NuStain's premise: given paired training data where NHS (a ubiquitous structural stain labeling all cell boundaries) and a target marker were captured from the same tissue, a model can learn to synthesize the target from NHS alone. At inference time, one cheap NHS stain is enough to generate the full virtual panel — no extra antibodies, no extra imaging passes.",
         ],
       },
       {
-        title: "Two Model Tracks: NAFNet + DDPM",
+        title: "NAFNet Regression as Primary Model",
         paragraphs: [
-          "Two architectures run in parallel. NAFNet is a regression model — it takes an NHS patch and directly predicts the target channel pixel values. Training uses L1/MAE loss with a multi-term evaluation suite: MAE, PSNR, SSIM, Edge Correlation (Pearson r on Sobel gradient magnitudes, which measures structural fidelity at boundaries), and F-IoU@90 (foreground IoU at the 90th percentile of ground-truth signal, which measures spatial precision of bright regions).",
-          "The DDPM track is a Conditional Diffusion model that generates the target channel as a denoising process conditioned on the NHS input. Where NAFNet gives fast, deterministic predictions, the diffusion model explores the generative quality frontier. Both are dispatched from the same factory: `config.model.type = 'nafnet'` or `'diffusion'` — the training engine and data pipeline are shared.",
+          "The primary model is NAFNet — a regression architecture that takes an NHS patch and directly predicts target channel pixel values. Evaluation goes beyond pixel-level error: SSIM captures structural similarity, Edge Correlation (Pearson r on Sobel gradient magnitudes) measures whether predicted boundaries match real cell edges, and F-IoU@90 checks spatial precision of bright foreground regions at the 90th percentile threshold. These metrics matter more than MAE alone because visually indistinguishable predictions don't just minimize error — they get cell morphology and boundary sharpness right.",
+          "An architecture ablation explores 5 NAFNet variants (base, small, shallow, deep, large) on the ACTN4 target to find the right capacity for this data type. DDPM (Conditional Diffusion) is being explored as a generative alternative — where NAFNet gives deterministic predictions, diffusion explores whether a generative approach better captures the stochastic texture of fluorescence signal.",
         ],
       },
       {
-        title: "The Data Pipeline: 80× Diversity From the Same Raw Acquisitions",
+        title: "Getting 80× More Data From the Same Acquisitions",
         paragraphs: [
-          "Raw acquisitions are volumetric `.nd2` files. The original sparse pipeline took 3 evenly spaced Z-slices with stride 256 — fast to extract, but biologically thin. Physical structures in expansion-microscopy tissue morph rapidly along Z; successive slices aren't duplicates, they're a 3D biological record. The dense pipeline samples every 5th Z-slice with stride 64 and 75% overlap, multiplying usable training patches by over 80× from the same raw acquisitions.",
-          "Per-slice preprocessing: Gaussian denoise (σ=1.5), rolling-ball background subtraction (r=50), percentile normalization. The resulting atomic .npy patches live in flat directories for fast random-access loading. Dataset splits are enforced at the physical coordinate level — (base_name, Y, X) — so correlated Z-slices from the same tissue location stay grouped, preventing validation score inflation from spatial leakage.",
+          "The original data pipeline sampled 3 evenly spaced Z-slices per volume at stride 256 — fast, but biologically sparse. Tissue in expansion microscopy morphs rapidly along Z; successive slices aren't duplicates, they're a 3D biological record of how cellular structures evolve in depth. Switching to every 5th Z-slice with stride 64 and 75% overlap multiplied usable training patches by over 80× from the same raw acquisitions — without collecting a single new slide.",
         ],
       },
       {
         title: "Context: Zhao Biophotonics Lab, CMU",
         paragraphs: [
-          "This is my primary graduate research at the Zhao Biophotonics Lab, Carnegie Mellon University. The lab sits at the intersection of optics, biology, and computational imaging — building tools that push what can be extracted from tissue samples at nanoscale resolution.",
-          "Current training state: ACTN4 and C3 are the lead kidney targets, both actively training toward convergence. Brain targets (GFP, TRITC) are in parallel training runs. An architecture ablation study runs 5 NAFNet variants (base, small, shallow, deep, large) on the ACTN4 task to characterize the capacity-accuracy trade-off for this data type.",
+          "This is my primary graduate research at the Zhao Biophotonics Lab, Carnegie Mellon University. The lab sits at the intersection of optics, biology, and computational imaging — building tools that push what can be extracted from biological tissue at nanoscale resolution. NuStain is the computational side of that: using generative and regression models to let a single staining pass produce the information content of many.",
         ],
       },
     ],

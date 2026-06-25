@@ -19,12 +19,12 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     description:
       "NAFNet regression + DDPM for virtual staining in expansion microscopy — predicting ACTN4 and C3 fluorescent channels from NHS structural stain alone on the lab's MAGNIFY protocol.",
     longDescription:
-      "NuStain is my primary graduate research at Zhao Biophotonics Lab (CMU), built on the lab's Nature-published MAGNIFY expansion microscopy protocol. The idea: physical constraints limit how many channels can be simultaneously stained. NuStain predicts target fluorescent markers (ACTN4, C3, IGG, C1Q in kidney; GFP, TRITC in brain) from a single NHS structural stain channel, making multiplexed data available without extra antibody panels or imaging passes. Two model tracks: NAFNet regression for fast deterministic prediction, and a DDPM (Conditional Diffusion) for generative quality. High-density 3D patch pipeline (every 5th Z-slice, stride 64, 75% overlap) provides 80× more training data than sparse 2D sampling from the same raw acquisitions.",
+      "NuStain is my primary graduate research at Zhao Biophotonics Lab (CMU), built on the lab's Nature-published MAGNIFY expansion microscopy protocol. The idea: physical constraints limit how many fluorescent channels can be simultaneously stained. NuStain predicts target markers (ACTN4, C3 in kidney; GFP, TRITC in brain) from a single NHS structural stain, making multiplexed data available without extra antibody panels or imaging passes. Primary model is NAFNet regression; DDPM is being explored as a generative alternative. A high-density 3D patch pipeline (every 5th Z-slice, stride 64, 75% overlap) provides 80× more training data from the same raw acquisitions.",
     highlights: [
       "Visually indistinguishable from ground truth on MAGNIFY protocol",
-      "NAFNet regression + DDPM dual model tracks on NHS → ACTN4/C3/IGG/C1Q/GFP/TRITC",
-      "80× data diversity via high-density 3D pipeline (every 5th Z-slice, stride 64, 75% overlap)",
-      "Multi-tissue: kidney (ACTN4 epoch 1569, val 0.1953; C3 epoch 1048, val 0.1162) and brain",
+      "Predicts ACTN4, C3, IGG, C1Q (kidney) and GFP, TRITC (brain) from NHS structural stain",
+      "NAFNet regression as primary model; DDPM (diffusion) explored as generative alternative",
+      "80× data diversity via high-density 3D Z-stack pipeline from same raw acquisitions",
       "Ongoing research at Zhao Biophotonics Lab, Carnegie Mellon University",
     ],
     domains: [
