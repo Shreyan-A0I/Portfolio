@@ -12,10 +12,10 @@ export const projectContent: Record<string, ProjectDetailContent> = {
   nustain: {
     sections: [
       {
-        title: "The Multiplexing Problem in Expansion Microscopy",
+        title: "MAGNIFY and the Diffraction Limit",
         paragraphs: [
-          "The lab's MAGNIFY protocol (published in Nature) is an expansion microscopy technique that physically expands tissue samples for nanoscale-resolution imaging. Fluorescent markers reveal specific proteins — ACTN4 marks podocyte injury in kidney, C3 marks complement deposition in glomeruli. The catch: antibody cross-reactivity and imaging time limit how many channels can be acquired in a single pass. A full multiplexed panel requires sequential staining runs, with risk of tissue degradation and spatial drift between them.",
-          "NuStain's premise: given paired training data where NHS (a ubiquitous structural stain labeling all cell boundaries) and a target marker were captured from the same tissue, a model can learn to synthesize the target from NHS alone. At inference time, one cheap NHS stain is enough to generate the full virtual panel — no extra antibodies, no extra imaging passes.",
+          "Conventional light microscopy hits a hard physical ceiling — the diffraction limit, roughly 200nm for visible light. Structures smaller than that blur together and can't be resolved regardless of magnification. MAGNIFY (the lab's Nature-published protocol) sidesteps this by physically expanding tissue 4–10× before imaging. The expansion is isotropic: the tissue grows uniformly in all directions, so small structures that were below the diffraction limit are now large enough for standard confocal optics to resolve. The result is nanoscale spatial biology without specialized nanoscopy hardware.",
+          "NuStain operates on top of MAGNIFY data. Fluorescent markers reveal specific proteins — ACTN4 marks podocyte injury in kidney, C3 marks complement deposition in glomeruli. The catch: antibody cross-reactivity and imaging time limit how many channels can be acquired in a single pass. A full multiplexed panel requires sequential staining runs, with risk of tissue degradation and spatial drift between them. NuStain's premise: given paired training data where NHS (a ubiquitous structural stain labeling all cell boundaries) and a target marker were captured from the same tissue, a model can learn to synthesize the target from NHS alone — one imaging pass, virtual panel.",
         ],
       },
       {
@@ -34,7 +34,7 @@ export const projectContent: Record<string, ProjectDetailContent> = {
       {
         title: "Context: Zhao Biophotonics Lab, CMU",
         paragraphs: [
-          "This is my primary graduate research at the Zhao Biophotonics Lab, Carnegie Mellon University. The lab sits at the intersection of optics, biology, and computational imaging — building tools that push what can be extracted from biological tissue at nanoscale resolution. NuStain is the computational side of that: using generative and regression models to let a single staining pass produce the information content of many.",
+          "This is my primary graduate research at the Zhao Biophotonics Lab, Carnegie Mellon University. The lab works at the intersection of optics, biology, and computational imaging — developing protocols that fight the physical limits of what microscopes can see. MAGNIFY fights one limit: the diffraction limit, through expansion rather than exotic optics. NuStain fights the next one: the multiplexing limit, through generative modeling rather than more antibody panels.",
         ],
       },
     ],

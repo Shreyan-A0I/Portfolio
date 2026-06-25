@@ -9,7 +9,9 @@
 
 ## Scientific Premise
 
-Fluorescent multiplexing in expansion microscopy allows high-resolution spatial biology, but physical constraints, antibody cross-reactivity, and imaging costs limit simultaneous channels. NuStain bypasses this by predicting target channels computationally from NHS (a ubiquitous structural protein stain mapping cell/tissue boundaries).
+Conventional light microscopy is bounded by the diffraction limit (~200nm for visible light) — structures smaller than that blur together regardless of magnification. MAGNIFY fights this by physically expanding tissue 4–10× before imaging: the expansion is isotropic, so sub-diffraction structures become resolvable with standard confocal optics. No exotic nanoscopy hardware required.
+
+NuStain adds the next layer: fighting the multiplexing limit. Fluorescent multiplexing allows high-resolution spatial biology, but antibody cross-reactivity and imaging time limit simultaneous channels. NuStain bypasses this by predicting target channels computationally from NHS (a ubiquitous structural protein stain mapping cell/tissue boundaries) — one imaging pass, virtual panel.
 
 | Input | Target Channels (Kidney) | Target Channels (Brain) |
 |-------|--------------------------|-------------------------|
