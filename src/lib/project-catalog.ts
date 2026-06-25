@@ -17,14 +17,14 @@ export const projectCatalog: ProjectCatalogEntry[] = [
   {
     category: "GENERATIVE AI",
     description:
-      "DDPM-based 'channel-to-channel generation' for virtual fluorescence microscopy — synthesizing multiplexed tissue stains in silico without the physical reagents.",
+      "NAFNet regression + DDPM for virtual staining in expansion microscopy — predicting ACTN4 and C3 fluorescent channels from NHS structural stain alone on the lab's MAGNIFY protocol.",
     longDescription:
-      "NuStain is the core project of my graduate research at Zhao Biophotonics Lab (CMU). The idea: a fluorescence microscopy experiment typically requires expensive reagents and can only stain a handful of channels simultaneously. NuStain trains a Denoising Diffusion Probabilistic Model to generate those additional stain channels computationally — from a single input channel, the model synthesizes what the other fluorescent markers would look like. Built an end-to-end HDF5 data pipeline, integrated FiLM (Feature-wise Linear Modulation) layers into a custom 8M-parameter architecture to condition generation on channel identity, and stabilized the diffusion process to convergence.",
+      "NuStain is my primary graduate research at Zhao Biophotonics Lab (CMU), built on the lab's Nature-published MAGNIFY expansion microscopy protocol. The idea: physical constraints limit how many channels can be simultaneously stained. NuStain predicts target fluorescent markers (ACTN4, C3, IGG, C1Q in kidney; GFP, TRITC in brain) from a single NHS structural stain channel, making multiplexed data available without extra antibody panels or imaging passes. Two model tracks: NAFNet regression for fast deterministic prediction, and a DDPM (Conditional Diffusion) for generative quality. High-density 3D patch pipeline (every 5th Z-slice, stride 64, 75% overlap) provides 80× more training data than sparse 2D sampling from the same raw acquisitions.",
     highlights: [
-      "DDPM trained for 'channel-to-channel generation' of multiplexed fluorescent tissue stains",
-      "FiLM layers integrated into custom 8M-parameter architecture for channel-conditioned generation",
-      "End-to-end HDF5 data pipeline for high-throughput microscopy image pairs",
-      "Enables cost-effective virtual multiplexing without expensive physical reagents",
+      "Visually indistinguishable from ground truth on MAGNIFY protocol",
+      "NAFNet regression + DDPM dual model tracks on NHS → ACTN4/C3/IGG/C1Q/GFP/TRITC",
+      "80× data diversity via high-density 3D pipeline (every 5th Z-slice, stride 64, 75% overlap)",
+      "Multi-tissue: kidney (ACTN4 epoch 1569, val 0.1953; C3 epoch 1048, val 0.1162) and brain",
       "Ongoing research at Zhao Biophotonics Lab, Carnegie Mellon University",
     ],
     domains: [
@@ -33,11 +33,11 @@ export const projectCatalog: ProjectCatalogEntry[] = [
       "computer-vision",
       "biological-systems",
     ],
-    headlineMetric: "In-silico multiplexing via diffusion",
+    headlineMetric: "Visually indistinguishable from ground truth on MAGNIFY",
     slug: "nustain",
     status: "ongoing",
-    tech: ["PyTorch", "DDPM", "Diffusion Models", "FiLM Layers", "HDF5", "Fluorescence Microscopy", "Python"],
-    title: "NuStain — Virtual Fluorescence Multiplexing",
+    tech: ["PyTorch", "NAFNet", "DDPM", "Diffusion Models", "Expansion Microscopy", "WandB", "Python"],
+    title: "NuStain — Virtual Staining for Expansion Microscopy",
   },
   {
     category: "CLINICAL AI",

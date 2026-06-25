@@ -1,59 +1,141 @@
----
-title: spotNUMT
-emoji: 🧬
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 4.44.1
-python_version: 3.10.13
-app_file: app.py
-pinned: false
+# NuStain — Virtual Staining for Expansion Microscopy
+
+**Lab:** Zhao Biophotonics Lab, Carnegie Mellon University  
+**Protocol:** MAGNIFY (Nature-published expansion microscopy)  
+**Task:** Predict functional fluorescent markers from structural stain (NHS)  
+**Models:** NAFNet regression + DDPM (Conditional Diffusion)
+
 ---
 
-# spotNUMT: Mitochondrial Pseudogene Detector
+## Scientific Premise
 
-**spotNUMT** is a deep learning pipeline designed to distinguish true mitochondrial DNA (mtDNA) sequences from **NuMTs** (Nuclear Mitochondrial DNA sequences). 
+Fluorescent multiplexing in expansion microscopy allows high-resolution spatial biology, but physical constraints, antibody cross-reactivity, and imaging costs limit simultaneous channels. NuStain bypasses this by predicting target channels computationally from NHS (a ubiquitous structural protein stain mapping cell/tissue boundaries).
 
-NuMTs are ancient fragments of mitochondrial DNA that have transposed into the nuclear genome over evolutionary time. Because they share extreme sequence similarity with true mtDNA, they frequently act as confounders in genomic analysis, falsely presenting as mitochondrial mutations. This project utilizes deep neural networks to learn the subtle biological motifs and contexts required to confidently separate the two.
+| Input | Target Channels (Kidney) | Target Channels (Brain) |
+|-------|--------------------------|-------------------------|
+| NHS structural stain | ACTN4, C3, IGG, C1Q | GFP, TRITC |
 
-# Usage (Gradio Web Interface)
-You can directly interact with the pre-trained Hybrid Model locally through a Gradio interface. Provide a raw string of DNA nucleotides (`A, C, G, T`) and get a prediction probability.
+- **ACTN4** (Actinin-4): podocyte injury marker
+- **C3** (Complement C3): glomerular immune-complex deposition
+- **GFP/TRITC**: brain marker channels
 
-```bash
-# 1. Setup virtual environment
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+---
 
-# 2. Launch Interface
-python app.py
+## Repository Architecture (Factory-Dispatch Pattern)
+
+```
+NuStain/
+├── src/data/         # Dataloader factories — dispatched via config.data.tissue
+├── src/models/       # nafnet + diffusion architectures — dispatched via config.model.type
+├── src/engine/       # NuStainTrainer (regression) + DiffusionTrainer (generative)
+├── scripts/          # Thin CLI entry points: train.py, evaluate.py, predict.py
+├── configs/          # YAML experiment configs per tissue/model
+└── Data/             # Flat-file atomic .npy training patches
 ```
 
-## Architecture Experiments & Validation
-The dataset exhibits extreme class imbalance (roughly 1:33, true mtDNA to NuMTs). Standard metrics like Accuracy and AUROC can be misleadingly high due to the high True Negative rate. **AUPRC (Area Under the Precision-Recall Curve)** is utilized as the primary evaluation metric because it directly measures the trade-off between Precision and Recall.
+**Extension protocol:** Add new tissue → `src/data/<tissue>/dataloader.py` + dispatch entry in `src/data/__init__.py`. Add new model → `src/models/<model>/` + dispatch entry. Never modify main scripts; logic belongs in `src/`.
 
-We systematically explored different architectures and class-balancing strategies to optimize detection:
+---
 
-| Experiment | Architecture / Strategy | Precision | Recall | AUPRC | Outcome & Trade-offs |
-|------------|----------|-----------|--------|-------|---------|
-| **Baseline** | Transformer Encoder | 18.4% | 87.5% | — | High recall but struggled with false positives. |
-| **Exp 1** | CNN + 2-Layer BiLSTM | ~12% | **100%** | **0.40** | **Best sequential architecture.** Incredible recall (found all true mtDNA) at the cost of precision. |
-| **Exp 2** | Deep Dilated CNN (TCN-style) | 13.1% | 100% | 0.28 | Expanded receptive field failed to capture long-range dependencies better than BiLSTM. |
-| **Exp 3** | CNN + BiLSTM + Attention | 10.8% | 100% | 0.39 | Attention weighting yielded nearly identical performance to pure BiLSTM. |
-| **Exp 4** | Reduced `pos_weight` (8.0 limit) | **17.2%** | 62.5% | 0.20 | Most *balanced* model. Sacrificed recall to increase precision (confidence in True Positives). |
-| **Exp 5** | Focal Loss ($\alpha=0.75, \gamma=2.0$) | 25.0% | 12.5% | 0.22 | Dynamically down-weighting "easy" negatives made the model overly conservative. |
-| **Exp 6** | Reverse Complement Augmentation | 0% | 0% | 0.19 | Synthetically doubling the minority class coupled with Focal Loss led to model collapse. |
+## Core Commands
 
-*Conclusion*: Attempting to force the network to look *too* hard at minority samples destroys the discriminative boundary for NuMTs. The raw **CNN + BiLSTM (Experiment 1)** architecture achieves the highest theoretical performance ceiling for capturing the complex sequence motifs.
+```bash
+# Patching (kidney)
+/home/WS_Tiger/miniconda3/envs/nustain/bin/python scripts/kidney/patch.py
 
-# Pipeline Components
-- `data_pipeline.py`: Slices FASTA genomes into uniform 200bp sequence windows, dropping fragments and unknown `N` bases.
-- `dataset.py`: Converts sequence subsets into one-hot encoded PyTorch tensors `[A,C,G,T]` and establishes the `80/10/10` DataLoaders.
-- `model.py`: Natively defines the PyTorch `nn.Module` hybrid sequence classification architecture.
-- `train.py`: Handles model orchestration, dynamic optimization (AdamW), and rigorous metric validation.
-- `inference.py`: Standalone script to load weights (`best_model.pt`) and process single strings.
+# Training
+conda run -n nustain python scripts/train.py --config configs/kidney/actn4_baseline.yaml
 
-## Credits & References
-This pipeline was trained using reference data generously provided by:
-- **NCBI**: The True Human Mitochondrial Reference Genome (`NC_012920.1`)
-- **UCSC Genome Browser**: The `hg38` NuMTs track dataset.
+# Evaluation
+conda run -n nustain python scripts/evaluate.py \
+  --config configs/kidney/actn4_baseline.yaml \
+  --checkpoint checkpoints/kidney/actn4_baseline/best_model.ckpt
+
+# Inference from patches
+python scripts/predict.py --config ... --checkpoint ... --patches_dir Data/Kidney/patches --output_dir outputs/kidney/actn4_inference
+
+# Inference from raw .nd2
+python scripts/predict.py --config ... --checkpoint ... --nd2_path Data/Kidney/raw/slide.nd2 --nhs_channel 0 --output_dir outputs/kidney/slide_inference
+
+# Re-stitch without re-inferring
+python scripts/restitch.py
+```
+
+**Multi-GPU Brain Training (always pin GPU per job):**
+```bash
+CUDA_VISIBLE_DEVICES=0 conda run -n nustain python scripts/train.py --config configs/brain/gfp_baseline.yaml
+CUDA_VISIBLE_DEVICES=1 conda run -n nustain python scripts/train.py --config configs/brain/tritc_baseline.yaml
+```
+Use batch_size=16 per single GPU (DataParallel previously split 32 across 2 GPUs). Always confirm `nvidia-smi | grep MiB` shows ~18 MiB idle before launching.
+
+---
+
+## Key Design Decisions & Pivots
+
+### 1. Decoupled CLI Engine (not Streamlit inline)
+Spawning GPU training from web app servers → zombie processes + crash dependencies. Keep training/preprocessing in headless CLI scripts. UI is for downstream preview and predictions only.
+
+### 2. High-Density 3D Spatial Pipeline (80× data diversity)
+- **Before:** 3 evenly spaced Z-slices, stride 256 (sparse)
+- **After:** every 5th Z-slice, stride 64, 75% overlap (dense)
+- Successive Z-slices contain genuine 3D structural diversity — not duplicates. Dense sampling + overlap = 80× more data without new acquisitions.
+- Preprocessing per slice: Gaussian denoise σ=1.5, rolling_ball BG subtract r=50, percentile normalize.
+
+### 3. Multi-GPU DataParallel with Clean Checkpoint Keys
+Automatic `module.` prefix stripping/adding in `_load_checkpoint()` — checkpoints stay portable between single-GPU and DataParallel runs. batch_size=16 per GPU (not 32).
+
+### 4. Sigmoid over Clamp (critical for NAFNet)
+Never `clamp(0,1)` on regression outputs — creates zero gradients and mosaic/tiled artifacts in predictions. Always project via `torch.sigmoid` for clean gradient flow.
+
+### 5. Coordinate-Level Dataset Splits (not patch-index)
+Split on `(base_name, Y, X)` physical coordinates, not random patch index. Correlated Z-slices from same physical location stay grouped — prevents validation score inflation.
+
+### 6. Target File Existence Check (O(1) in-memory)
+Load all target channel files into a Python `set` before caching patch keys. Avoids per-patch `os.path.exists()` calls on 150k+ patches. `if base_f in target_files` → O(1) lookup.
+
+---
+
+## Evaluation Metrics
+
+| Metric | What It Measures |
+|--------|-----------------|
+| MAE | Mean absolute pixel error |
+| PSNR (dB) | Signal-to-noise reconstruction quality |
+| SSIM | Structural similarity (luminance, contrast, structure) |
+| Edge Corr | Pearson r on Sobel gradient magnitudes — edge/structure fidelity |
+| F-IoU@90 | IoU of foreground masks at 90th-percentile GT threshold — spatial precision of bright regions |
+
+Stitch visualization output: labeled 4-column PNG `[NHS | GT | Prediction | Overlay]`. Overlay: yellow = missed GT, magenta = false positive, white = match.
+
+---
+
+## Architecture Ablation (NAFNet variants on ACTN4)
+
+5 configs: base, small, shallow, deep, large — in `configs/kidney/ablation/`.  
+Orchestrator: `scripts/kidney/run_ablation.py` (resume-safe, state in `checkpoints/kidney/ablation/state.json`)  
+Tracked on WandB project: `NuStain_Ablation`. Run naming: `[Model]_[Tissue]_[Input]_to_[Target]_[Details]`.
+
+---
+
+## Current Training State (as of May 2026)
+
+**Golden Baseline:** ACTN4 epoch 1569 val_loss 0.1953; C3 epoch 1048 val_loss 0.1162.
+
+Active tmux sessions:
+- `nustain_actn4` (GPU 0): ACTN4 baseline, running to 3000 epochs, patience=500
+- `nustain_c3` (GPU 1): C3, warm-started from ACTN4 `last_model.ckpt`, 3000 epochs
+- `nustain_actn4_infer` (GPU 0): Full-patch ACTN4 inference → `outputs/kidney/actn4_inference/`
+- `nustain_c3_infer` (GPU 1): C3 inference → `outputs/kidney/c3_inference/`
+
+Always use absolute python path in tmux: `/home/WS_Tiger/miniconda3/envs/nustain/bin/python` (prevents SIGHUP, avoids conda stdout buffering).
+
+Pending after ablation/inference: resume IGG (ep 104, val=0.143) and C1Q (ep 251, val=0.035).
+
+---
+
+## PyTorch / Safety Constraints
+
+- `torch.load(..., weights_only=False)` — needed to safely unpickle `DotDict` config from checkpoints (PyTorch 2.6+)
+- `sys.path.insert(0, ...)` at top of every script in `scripts/` — Python adds script dir, not project root, to sys.path when running directly
+- WandB: always pass `step=epoch` in every `wandb.log()` call — otherwise fractional step drift misaligns charts
+- Test data: `Data/Kidney/patches_test/` — 147,622 NHS + 147,622 ACTN4 patches from 11 slides. Channel correction applied: 20240523 cohort had NHS↔ACTN4 physically swapped (fixed by renaming patches).
