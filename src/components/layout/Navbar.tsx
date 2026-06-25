@@ -30,10 +30,10 @@ export default function Navbar() {
               Projects
             </Link>
             <Link
-              href="/about"
+              href="/feed"
               className="interactive-link text-text-secondary hover:text-text-primary transition"
             >
-              About
+              Feed
             </Link>
             <Link
               href="/resume"
@@ -88,11 +88,11 @@ export default function Navbar() {
               Projects
             </Link>
             <Link
-              href="/about"
+              href="/feed"
               onClick={() => setIsOpen(false)}
               className="block text-text-secondary hover:text-text-primary py-2"
             >
-              About
+              Feed
             </Link>
             <Link
               href="/resume"

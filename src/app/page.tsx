@@ -132,6 +132,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Background ── */}
+      <section className="px-6 py-16 sm:px-10 lg:px-12">
+        <div className="mx-auto max-w-3xl">
+          <p className="mb-8 hud-text text-xs uppercase tracking-widest text-text-secondary/50">Background</p>
+          <div className="space-y-5 text-text-secondary leading-relaxed">
+            <p>
+              Both my parents are doctors — my mother is a cancer pathologist, my father
+              a laparoscopic gynecologist. Growing up accompanying my mom to the lab,
+              being around hospitals from an early age, kept medicine close. When I found
+              computation, I found a second lens for the same kind of problems: high-stakes,
+              complex data, real consequences.
+            </p>
+            <p>
+              My first real taste of clinical AI came at{" "}
+              <strong className="text-text-primary">Vyuhaa Med Data</strong> in Hyderabad —
+              building the <strong className="text-text-primary">CerviAI</strong> pipeline
+              end-to-end and deploying it on Jetson Orin Nano with live inference running
+              concurrently as the scanner captured slides. When it worked, something clicked
+              about what it means to build AI that operates in the world, not in a notebook.
+            </p>
+            <p>
+              Now I&apos;m at{" "}
+              <strong className="text-text-primary">Zhao Biophotonics Lab at CMU</strong>,
+              building diffusion models for in-silico fluorescence multiplexing — letting
+              microscopes see more than their optics allow.
+            </p>
+          </div>
+          <div className="mt-8">
+            <a href="/feed" className="interactive-link text-sm text-accent-amber hover:underline underline-offset-4">
+              Notes &amp; updates →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
       <section className="editorial-panel mx-6 rounded-2xl px-8 py-12 sm:mx-10 lg:mx-12">
         <div className="mx-auto max-w-2xl text-center">
