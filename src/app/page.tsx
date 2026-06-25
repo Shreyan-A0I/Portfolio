@@ -26,8 +26,7 @@ export default function Home() {
 
       {/* ── Portfolio landing ──────────────────────────────────────────────── */}
       <section
-        id="portfolio"
-        className="hero-overlay scroll-mt-16 min-h-[88vh] px-6 py-16 sm:px-10 lg:px-12 flex items-center"
+        className="hero-overlay min-h-[88vh] px-6 py-16 sm:px-10 lg:px-12 flex items-center"
       >
         <div className="mx-auto max-w-7xl w-full">
           <div className="grid lg:grid-cols-[1fr_1fr] gap-16 items-center">

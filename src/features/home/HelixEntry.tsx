@@ -1,34 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// ── Strand sequences ─────────────────────────────────────────────────────────
-const N = 34;
+const N = 42;
 
 const BIO_SEQ = [
   "A","T","G","C","T","A","C","G","A","T",
   "G","C","A","T","G","C","A","T","C","G",
   "A","T","G","C","T","A","C","G","A","T",
-  "G","C","A","T",
+  "G","C","A","T","G","C","A","T","C","G",
+  "A","T",
 ];
 const COMP_SEQ = [
   "0xFF","0x00","0x1A","0xDE","0xB2","0xFA","0x42","0xCA",
   "0xFF","0x11","0x7F","0xAA","0x3D","0xEF","0xBC","0xA4",
   "0xFF","0x00","0x1A","0xDE","0xB2","0xFA","0x42","0xCA",
   "0xFF","0x11","0x7F","0xAA","0x3D","0xEF","0xBC","0xA4",
-  "0xFF","0x00",
+  "0xFF","0x00","0x1A","0xDE","0xB2","0xFA","0x42","0xCA",
+  "0xFF","0x11",
 ];
 
 const BIO_COLOR  = "#00E5FF";
 const COMP_COLOR = "#e8e4df";
 
 interface HelixNode {
-  sx:     number;
-  sy:     number;
-  z:      number;
-  scale:  number;
-  label:  string;
-  strand: 1 | 2;
+  sx: number; sy: number; z: number; scale: number;
+  label: string; strand: 1 | 2;
 }
 
 export default function HelixEntry() {
@@ -37,11 +34,18 @@ export default function HelixEntry() {
   const mouse       = useRef({ x: 0.5, y: 0.5 });
   const mouseTarget = useRef({ x: 0.5, y: 0.5 });
 
+  const [exiting, setExiting] = useState(false);
+  const [gone,    setGone]    = useState(false);
+
+  const enter = () => {
+    setExiting(true);
+    setTimeout(() => setGone(true), 700);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
-
     const dpr = window.devicePixelRatio || 1;
     let w = 0, h = 0, rafId = 0;
 
@@ -60,43 +64,36 @@ export default function HelixEntry() {
     window.addEventListener("mousemove", onMouse);
 
     const draw = () => {
-      // Reset transform each frame so resize doesn't accumulate scales
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
 
-      // ── Smooth cursor lerp ─────────────────────────────────────────────────
       const m = mouse.current;
       m.x += (mouseTarget.current.x - m.x) * 0.04;
       m.y += (mouseTarget.current.y - m.y) * 0.04;
 
-      // ── Helix parameters ───────────────────────────────────────────────────
       const CX     = w / 2;
       const CY     = h / 2;
-      const RADIUS = Math.min(w * 0.12, 85);
-      const H      = Math.min(h * 0.84, 600);
+      const RADIUS = Math.min(w * 0.22, 160);
+      const H      = Math.min(h * 0.90, 780);
       const STEP   = H / N;
-      const TURNS  = 3;
+      const TURNS  = 3.5;
       const FREQ   = (2 * Math.PI * TURNS) / N;
-      const D      = Math.max(w, h) * 0.88;   // perspective distance
+      const D      = Math.max(w, h) * 0.90;
 
-      // Mouse-driven tilt (small angles)
-      const tiltY  = (m.x - 0.5) * 0.32;
-      const tiltX  = (m.y - 0.5) * 0.18;
-      const cosY   = Math.cos(tiltY), sinY = Math.sin(tiltY);
-      const cosX   = Math.cos(tiltX), sinX = Math.sin(tiltX);
+      const tiltY = (m.x - 0.5) * 0.32;
+      const tiltX = (m.y - 0.5) * 0.18;
+      const cosY = Math.cos(tiltY), sinY = Math.sin(tiltY);
+      const cosX = Math.cos(tiltX), sinX = Math.sin(tiltX);
 
       function project(x0: number, y0: number, z0: number) {
-        // Rotate around Y (left/right lean)
         const x1 = x0 * cosY + z0 * sinY;
         const z1 = -x0 * sinY + z0 * cosY;
-        // Rotate around X (forward/back lean)
         const y1 = y0 * cosX - z1 * sinX;
         const z2 = y0 * sinX + z1 * cosX;
         const scale = D / (D + z2 + RADIUS);
         return { sx: CX + x1 * scale, sy: CY + y1 * scale, z: z2, scale };
       }
 
-      // ── Build node arrays ──────────────────────────────────────────────────
       const s1: HelixNode[] = [];
       const s2: HelixNode[] = [];
 
@@ -104,13 +101,8 @@ export default function HelixEntry() {
         const a1   = i * FREQ + phaseRef.current;
         const a2   = a1 + Math.PI;
         const yOff = -H / 2 + i * STEP;
-
-        const x1 = RADIUS * Math.cos(a1), z1 = RADIUS * Math.sin(a1);
-        const x2 = RADIUS * Math.cos(a2), z2 = RADIUS * Math.sin(a2);
-
-        const p1 = project(x1, yOff, z1);
-        const p2 = project(x2, yOff, z2);
-
+        const p1 = project(RADIUS * Math.cos(a1), yOff, RADIUS * Math.sin(a1));
+        const p2 = project(RADIUS * Math.cos(a2), yOff, RADIUS * Math.sin(a2));
         s1.push({ ...p1, label: BIO_SEQ[i],  strand: 1 });
         s2.push({ ...p2, label: COMP_SEQ[i], strand: 2 });
       }
@@ -121,19 +113,17 @@ export default function HelixEntry() {
         return min + (1 - (z + maxZ) / (2 * maxZ)) * (max - min);
       }
 
-      // ── Draw strand lines ──────────────────────────────────────────────────
       function drawStrand(pts: HelixNode[], color: string) {
         ctx.save();
-        ctx.lineJoin = "round";
-        ctx.lineCap  = "round";
+        ctx.lineJoin = "round"; ctx.lineCap = "round";
         for (let i = 0; i < pts.length - 1; i++) {
           const a = pts[i], b = pts[i + 1];
           ctx.beginPath();
           ctx.moveTo(a.sx, a.sy);
           ctx.lineTo(b.sx, b.sy);
-          ctx.strokeStyle  = color;
-          ctx.lineWidth    = 1.8 * ((a.scale + b.scale) / 2);
-          ctx.globalAlpha  = depthAlpha((a.z + b.z) / 2);
+          ctx.strokeStyle = color;
+          ctx.lineWidth   = 2.2 * ((a.scale + b.scale) / 2);
+          ctx.globalAlpha = depthAlpha((a.z + b.z) / 2);
           ctx.stroke();
         }
         ctx.restore();
@@ -142,64 +132,46 @@ export default function HelixEntry() {
       drawStrand(s1, BIO_COLOR);
       drawStrand(s2, COMP_COLOR);
 
-      // ── Draw base-pair rungs ───────────────────────────────────────────────
       ctx.save();
       for (let i = 0; i < N; i++) {
         const a = s1[i], b = s2[i];
-        const avgZ = (a.z + b.z) / 2;
         ctx.beginPath();
         ctx.moveTo(a.sx, a.sy);
         ctx.lineTo(b.sx, b.sy);
-        ctx.strokeStyle  = "#4a5568";
-        ctx.lineWidth    = 0.8;
-        ctx.globalAlpha  = depthAlpha(avgZ, 0.05, 0.22);
+        ctx.strokeStyle = "#4a5568";
+        ctx.lineWidth   = 0.9;
+        ctx.globalAlpha = depthAlpha((a.z + b.z) / 2, 0.05, 0.25);
         ctx.stroke();
       }
       ctx.restore();
 
-      // ── Draw nodes (back-to-front) ─────────────────────────────────────────
       const allNodes: HelixNode[] = [...s1, ...s2];
       allNodes.sort((a, b) => b.z - a.z);
 
       for (const node of allNodes) {
         const alpha  = depthAlpha(node.z);
-        const r      = (node.strand === 1 ? 4.8 : 4.0) * node.scale;
+        const r      = (node.strand === 1 ? 5.5 : 4.5) * node.scale;
         const color  = node.strand === 1 ? BIO_COLOR : COMP_COLOR;
         const isFront = node.z < -maxZ * 0.3;
 
         ctx.save();
         ctx.globalAlpha = alpha;
-
-        // Glow on front-facing nodes
-        if (isFront) {
-          ctx.shadowBlur  = 18;
-          ctx.shadowColor = color;
-        }
-
-        // Node circle
+        if (isFront) { ctx.shadowBlur = 22; ctx.shadowColor = color; }
         ctx.beginPath();
         ctx.arc(node.sx, node.sy, r, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Label — only when node is large enough to be readable
-        if (r > 3.2) {
-          const fs = Math.max(6.5, (node.strand === 1 ? 9 : 7.5) * node.scale);
+        if (r > 3.5) {
+          const fs = Math.max(7, (node.strand === 1 ? 10 : 8) * node.scale);
           ctx.font         = `${fs}px "Courier New", monospace`;
           ctx.fillStyle    = color;
           ctx.textBaseline = "middle";
-
-          const pad = r + 4;
-          if (node.sx < CX) {
-            ctx.textAlign = "right";
-            ctx.fillText(node.label, node.sx - pad, node.sy + 1);
-          } else {
-            ctx.textAlign = "left";
-            ctx.fillText(node.label, node.sx + pad, node.sy + 1);
-          }
+          const pad = r + 5;
+          ctx.textAlign = node.sx < CX ? "right" : "left";
+          ctx.fillText(node.label, node.sx + (node.sx < CX ? -pad : pad), node.sy + 1);
         }
-
         ctx.restore();
       }
 
@@ -208,7 +180,6 @@ export default function HelixEntry() {
     };
 
     draw();
-
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
@@ -216,13 +187,19 @@ export default function HelixEntry() {
     };
   }, []);
 
+  if (gone) return null;
+
   return (
-    <section className="relative flex h-[calc(100vh-65px)] flex-col overflow-hidden bg-[#09090B]">
-      {/* ── Canvas ── */}
+    <div
+      className={`fixed inset-0 z-50 flex flex-col bg-[#09090B] transition-opacity duration-700 ${
+        exiting ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      {/* Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-      {/* ── Top identity ── */}
-      <div className="relative z-10 px-8 pt-12 sm:px-14">
+      {/* Top identity */}
+      <div className="relative z-10 px-8 pt-10 sm:px-14">
         <p className="font-mono text-[10px] tracking-[0.5em] text-white/20 uppercase">
           Shreyan Balaji Nalwad
         </p>
@@ -231,41 +208,37 @@ export default function HelixEntry() {
         </p>
       </div>
 
-      {/* ── Centered enter CTA ── */}
-      <div className="relative z-10 mt-auto mb-10 flex flex-col items-center gap-3">
+      {/* Enter button — centered horizontally, 70% down vertically */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-end pb-16">
         <button
-          onClick={() =>
-            document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="group flex flex-col items-center gap-2 cursor-pointer"
-          aria-label="Enter portfolio"
+          onClick={enter}
+          className="group relative font-mono uppercase tracking-[0.35em] text-sm
+            border border-[#00E5FF]/25 bg-[#00E5FF]/5 px-10 py-4
+            text-[#00E5FF]/60
+            transition-all duration-300
+            hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/10 hover:text-[#00E5FF]
+            hover:shadow-[0_0_32px_rgba(0,229,255,0.18)]
+            focus:outline-none"
         >
-          <span className="font-mono text-[11px] tracking-[0.4em] text-white/30 uppercase transition-colors group-hover:text-[#00E5FF]/70">
-            enter portfolio
-          </span>
-          {/* Pulsing line */}
-          <span className="relative block h-8 w-px overflow-hidden">
-            <span className="absolute inset-0 bg-gradient-to-b from-[#00E5FF]/50 to-transparent animate-pulse" />
-          </span>
-          {/* Arrow */}
-          <svg
-            className="h-3.5 w-3.5 text-white/20 transition-colors group-hover:text-[#00E5FF]/60 -mt-1"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+          enter
+          {/* corner accents */}
+          <span className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00E5FF]/50 -translate-x-px -translate-y-px" />
+          <span className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#00E5FF]/50 translate-x-px -translate-y-px" />
+          <span className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#00E5FF]/50 -translate-x-px translate-y-px" />
+          <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00E5FF]/50 translate-x-px translate-y-px" />
         </button>
+
+        <p className="mt-4 font-mono text-[9px] tracking-[0.4em] text-white/15 uppercase">
+          biology · compute · systems
+        </p>
       </div>
 
-      {/* ── Legend ── */}
-      <div className="relative z-10 absolute bottom-4 right-8 font-mono text-[9px] text-white/12 leading-relaxed text-right hidden sm:block">
+      {/* Legend */}
+      <div className="relative z-10 absolute bottom-5 right-8 font-mono text-[9px] text-white/12 leading-relaxed text-right hidden sm:block">
         <span className="text-[#00E5FF]/25">●</span> A · T · G · C
         <br />
         <span className="text-white/20">●</span> 0xFF · 0x1A · …
       </div>
-    </section>
+    </div>
   );
 }
