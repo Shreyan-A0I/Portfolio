@@ -14,8 +14,8 @@ export default function ProjectsPage() {
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           eyebrow="Projects"
-          title="Case studies and systems work"
-          subtitle="A running index of projects mapped across computational biology, AI systems, and research tooling domains."
+          title="Everything I've built or obsessed over"
+          subtitle="Mapped across bio, ML, and wherever the problem took me."
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -12,7 +12,7 @@ export default function SectionHeader({
   return (
     <div className="mb-12">
       {eyebrow && (
-        <p className="mb-4 text-sm uppercase tracking-widest text-text-secondary">
+        <p className="mb-4 text-xs uppercase tracking-widest text-text-secondary">
           {eyebrow}
         </p>
       )}
@@ -20,7 +20,7 @@ export default function SectionHeader({
         {title}
       </h1>
       {subtitle && (
-        <p className="max-w-2xl text-lg text-text-secondary">{subtitle}</p>
+        <p className="max-w-2xl text-xl text-text-secondary">{subtitle}</p>
       )}
     </div>
   );

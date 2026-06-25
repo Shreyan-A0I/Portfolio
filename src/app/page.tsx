@@ -104,8 +104,8 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Featured Work"
-            title="Recent Projects"
-            subtitle="A selection of ongoing work across computational biology, ML systems, and research tooling."
+            title="What I'm building"
+            subtitle="The ones I'd actually show someone."
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
             {featuredProjects.map((project) => (
@@ -170,10 +170,10 @@ export default function Home() {
       <section className="editorial-panel mx-6 rounded-2xl px-8 py-12 sm:mx-10 lg:mx-12">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 text-3xl font-bold text-text-primary">
-            Let&apos;s Build Something
+            want to talk?
           </h2>
           <p className="mb-8 text-text-secondary">
-            Interested in computational biology, generative AI, or edge ML systems? Reach out.
+            if you&apos;re working on something interesting, reach out.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a

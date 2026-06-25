@@ -60,10 +60,10 @@ export default function FeedPage() {
               <span className="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-accent-amber/80" />
 
               <div className="mb-3 flex items-center gap-3">
-                <span className="hud-text text-xs text-text-secondary/50 uppercase tracking-widest">
+                <span className="hud-text text-sm text-text-secondary/50 uppercase tracking-widest">
                   {entry.date}
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded-full border border-border-subtle text-text-secondary/60">
+                <span className="text-sm px-2 py-0.5 rounded-full border border-border-subtle text-text-secondary/60">
                   {entry.tag}
                 </span>
               </div>

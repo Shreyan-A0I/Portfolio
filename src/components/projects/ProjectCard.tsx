@@ -63,34 +63,34 @@ export default function ProjectCard({
 
           {/* Description - Shows on Hover */}
           <p
-            className={`text-sm text-text-secondary mb-4 transition-all duration-500 overflow-hidden ${
-              isHovered ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+            className={`text-base text-text-secondary mb-4 transition-all duration-500 overflow-hidden ${
+              isHovered ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
             {description}
           </p>
 
           {/* Metric */}
-          <p className="text-accent-amber font-semibold text-sm mb-4">
+          <p className="text-accent-amber font-semibold text-base mb-4">
             {headlineMetric}
           </p>
 
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-2">
             {tech.slice(0, 3).map((item) => (
-              <Tag key={item} className="text-xs">
+              <Tag key={item} className="text-sm">
                 {item}
               </Tag>
             ))}
             {tech.length > 3 && (
-              <span className="text-xs text-text-secondary">
+              <span className="text-sm text-text-secondary">
                 +{tech.length - 3} more
               </span>
             )}
           </div>
 
           {/* View Details Link */}
-          <div className="mt-4 inline-flex items-center text-accent-amber text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="mt-4 inline-flex items-center text-accent-amber text-base font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
             View Details
             <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
