@@ -42,17 +42,6 @@ const entries: FeedEntry[] = [
       "C-index of 0.5507 on 176 patients isn't going to set the world on fire, but the point was demonstrating the federated multimodal framework, and the Kaplan-Meier separation across 3 clusters held up visually.",
     ],
   },
-  {
-    date: "origin",
-    tag: "background",
-    title: "How I got here",
-    paragraphs: [
-      "Both my parents are doctors — my mother is a cancer pathologist, my father a laparoscopic gynecologist. Growing up accompanying my mom to the lab, being around hospitals from an early age, kept medicine close. When I found computation, I found a second lens for the same kind of problems: high-stakes, complex data, real consequences. Comp bio sits at the intersection of the most unique data in all of machine learning and problems that can eventually change outcomes for real people — in cancer diagnosis, in drug discovery, in how we understand disease at a molecular level.",
-      "My first real taste of what clinical AI actually means came at Vyuhaa Med Data in Hyderabad. My coworker handled the robotics side of a prototype WSI scanner — slide movement, stitching, mechanical choreography. I owned the software: the CerviAI pipeline end-to-end, deployment on Jetson Orin Nano, live inference running concurrently while the slide was being captured. When it worked — when the scanner was moving and the pipeline was flagging suspicious regions in near real-time — something clicked about what it means to build AI that operates in the world, not in a notebook.",
-      "My CTO pushed hard on modularity and unit testing, and modelled a principle I now carry into everything: show, don't explain. I also spent a lot of time translating between the technical pipeline and the in-house pathologist — that back-and-forth forced me to understand the domain, not just the model.",
-      "Now I'm at Zhao Biophotonics Lab at CMU, building diffusion models for in-silico fluorescence multiplexing. Letting microscopes see more than their optics allow.",
-    ],
-  },
 ];
 
 export default function FeedPage() {
@@ -62,7 +51,7 @@ export default function FeedPage() {
         <SectionHeader
           eyebrow="Feed"
           title="Notes & Updates"
-          subtitle="Research observations, project updates, and things worth writing down."
+          subtitle="I dump stories here."
         />
 
         <div className="space-y-12 mt-2">
