@@ -17,15 +17,6 @@ export const feedEntries: FeedEntry[] = [
     image: "/sandwich.gif",
   },
   {
-    date: "2026-06",
-    tag: "research",
-    title: "NuStain: NAFNet on kidney tissue converging",
-    paragraphs: [
-      "ACTN4 and C3 training runs are both deep into convergence — ACTN4 at epoch 1569, C3 at 1048. The high-density Z-stack pipeline (every 5th slice, stride 64) is doing a lot of the work: having 80× more training patches from the same raw acquisitions meant the model saw real 3D structural diversity instead of three sparse slices per volume. Predictions on held-out slides are looking indistinguishable from ground truth at a glance.",
-      "Started running the DDPM (diffusion) track alongside NAFNet to see whether a generative approach handles texture differently. Early results pending.",
-    ],
-  },
-  {
     date: "2026-02",
     tag: "hackathon",
     title: "3rd at AWAP 2026 — and a drone I'll probably crash on Forbes",
