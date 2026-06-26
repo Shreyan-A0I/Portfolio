@@ -9,6 +9,7 @@ export interface ProjectCatalogEntry {
   status: "concept" | "research" | "shipped" | "ongoing";
   tech: string[];
   title: string;
+  thumbnail?: string;
   github?: string;
   demo?: string;
 }
@@ -38,6 +39,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["PyTorch", "NAFNet", "DDPM", "Diffusion Models", "Expansion Microscopy", "WandB", "Python"],
     title: "NuStain — Virtual Staining for Expansion Microscopy",
+    thumbnail: "/thumb-nustain.png",
   },
   {
     category: "CLINICAL AI",
@@ -58,6 +60,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["YOLOv11", "PyTorch", "OpenSlide", "TensorRT", "Jetson Orin Nano", "Active Learning", "Python"],
     title: "CerviAI — WSI Pipeline + Edge Deployment",
+    thumbnail: "/thumb-cerviai.png",
   },
   {
     category: "DEEP LEARNING",
@@ -156,6 +159,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["PyTorch Geometric", "GATv2Conv", "Knowledge Graphs", "LLM Embeddings", "Genomics", "Python"],
     title: "MitoGraph - Genomic Graph ML",
+    thumbnail: "/thumb-mitograph.png",
     github: "https://github.com/Shreyan-A0I/Mitomap-app",
     demo: "https://mitomap-app.vercel.app/",
   },
@@ -177,6 +181,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["PyTorch", "CNN", "BiLSTM", "Genomics", "Sequence Classification", "Gradio", "Python"],
     title: "spotNUMT - Sequence Classification",
+    thumbnail: "/thumb-spotnumt.jpeg",
     demo: "https://huggingface.co/spaces/shwew/spotNUMT",
   },
   {
@@ -198,6 +203,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "research",
     tech: ["PyTorch", "Domain Adversarial Training", "Active Learning", "Spatial Transcriptomics", "H&E Histology", "UNI", "Python"],
     title: "Inv-SHAF — Spatial Gene Expression Prediction",
+    thumbnail: "/thumb-invshaf.png",
   },
   {
     category: "TRANSCRIPTOMICS",
@@ -218,6 +224,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "research",
     tech: ["Python", "scanpy", "AnnData", "UMAP", "PCA", "XGBoost", "scikit-learn", "Bayesian Methods"],
     title: "CMV Immune Fingerprint — scRNA-seq",
+    thumbnail: "/thumb-cmv.png",
   },
   {
     category: "FULL-STACK",
@@ -237,5 +244,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "research",
     tech: ["React", "Python", "Full-Stack", "Data Pipelines", "Sustainability Data"],
     title: "This For That - Impact Recommendations",
+    thumbnail: "/thumb-thisorthat.png",
+    demo: "https://thisorthatfood.netlify.app/",
   },
 ];

@@ -37,10 +37,10 @@ export default function FeedPage() {
                 {entry.title}
               </h2>
 
-              {entry.gif && (
+              {entry.image && (
                 <div className="mb-4 overflow-hidden rounded-xl border border-border-subtle">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={entry.gif} alt={entry.title} className="w-full max-w-md" />
+                  <img src={entry.image} alt={entry.title} className="w-full max-w-md" />
                 </div>
               )}
               <div className="space-y-4 text-text-secondary leading-relaxed">

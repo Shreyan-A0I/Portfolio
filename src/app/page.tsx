@@ -151,7 +151,7 @@ export default function Home() {
                 <p className="text-base font-semibold text-text-primary leading-snug mb-2 group-hover:text-accent-amber transition-colors">
                   {entry.title}
                 </p>
-                {!entry.gif && (
+                {!entry.image && (
                   <p className="text-sm text-text-secondary/70 leading-relaxed line-clamp-2">
                     {entry.paragraphs[0]}
                   </p>

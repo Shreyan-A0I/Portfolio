@@ -3,7 +3,7 @@ export interface FeedEntry {
   tag: string;
   title: string;
   paragraphs: string[];
-  gif?: string;
+  image?: string;
 }
 
 export const feedEntries: FeedEntry[] = [
@@ -14,7 +14,7 @@ export const feedEntries: FeedEntry[] = [
     paragraphs: [
       "that sandwich was the only good thing in his life. i get it ross. i get it.",
     ],
-    gif: "/sandwich.gif",
+    image: "/sandwich.gif",
   },
   {
     date: "2026-06",
@@ -26,12 +26,33 @@ export const feedEntries: FeedEntry[] = [
     ],
   },
   {
-    date: "2026-05",
-    tag: "update",
-    title: "CHIMERA, MUFFLE, and what hackathons are actually good for",
+    date: "2026-02",
+    tag: "hackathon",
+    title: "3rd at AWAP 2026 — and a drone I'll probably crash on Forbes",
     paragraphs: [
-      "Built MUFFLE in a compressed sprint for the CHIMERA federated learning challenge — 11-person team, multimodal WSI + RNA-seq fusion, bladder cancer risk stratification. Won Best Collaboration Award. The thing about well-run hackathons is that the time pressure forces you to make architectural decisions fast and live with them. Gated attention for modality fusion was a 20-minute decision that turned out to be the right one.",
-      "C-index of 0.5507 on 176 patients isn't going to set the world on fire, but the point was demonstrating the federated multimodal framework, and the Kaplan-Meier separation across 3 clusters held up visually.",
+      "CMU's AWAP is a semester-long programming competition. This year: Overcooked. Two bots had to coordinate across buying, prepping, cooking, and plating in real-time against 80-odd other teams. No RL, no neural nets — we treated the kitchen as a resource allocation problem. Hungarian algorithm for task assignment, Johnson's for fast distance lookups, and a sabotage module that invades the opponent's kitchen at exactly the right moment.",
+      "Was mid-table for most of the semester. Then my roommate and I spent the last 6 hours really iterating on each other's approaches. Something clicked — we went from nowhere to 3rd. Working inside a competition engine reminded me why I love this kind of problem. The game engine itself was complicated; getting two agents to reason about a shared environment without stepping on each other is genuinely hard. Walked away with 3rd place and a drone.",
+    ],
+    image: "/awap-win.jpeg",
+  },
+  {
+    date: "2026-01",
+    tag: "hackathon",
+    title: "MUFFLE at CHIMERA — the best decisions came from asking obvious questions",
+    paragraphs: [
+      "CHIMERA was NVIDIA's federated learning biohackathon — 11-person team, multimodal WSI + RNA-seq fusion for bladder cancer risk stratification. We called ourselves MUFFLE. Won Best Collaboration Award.",
+      "The thing I remember most wasn't the architecture. It was that asking mentors blunt, simple questions — 'what would you actually do here?', 'what's the fastest path to something that works?' — consistently produced better answers than long internal debates. Our gated attention approach for modality fusion came from a 5-minute conversation. Most of the good decisions that weekend did.",
+    ],
+    image: "/nvidia-biohackathon.jpeg",
+  },
+  {
+    date: "2025-07",
+    tag: "reflection",
+    title: "What I actually took from Vyuhaa Med Data",
+    paragraphs: [
+      "Wrapped up my internship at Vyuhaa Med Data in Hyderabad. Built the CerviAI pipeline — tissue detection, nuclear segmentation, a 3-stage cascade, and deployment on Jetson Orin Nano running live inference while the scanner captured slides. More detail in the CerviAI project page.",
+      "What I didn't expect was how much the culture shaped my thinking. Dhritiman built something rare: a team where you're trusted to figure things out. My mentor Krishna gave me three things that stuck — know what not to do, back ideas with a proof of concept before refining them, and know when to go deep vs zoom out. Simple rules that are actually hard to execute.",
+      "CerviAI is trying to do something real. Early cervical cancer screening in rural India, where specialist access is close to zero. That part hasn't left me.",
     ],
   },
 ];
