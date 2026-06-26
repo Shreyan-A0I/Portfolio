@@ -167,7 +167,7 @@ export default function Home() {
                 </p>
                 {entry.image ? (
                   <div className="mt-2 rounded-lg overflow-hidden h-28 relative">
-                    <Image src={entry.image} alt={entry.title} fill unoptimized={entry.image.endsWith(".gif")} className="object-cover opacity-65 group-hover:opacity-85 transition-opacity duration-300" />
+                    <Image src={entry.image} alt={entry.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" unoptimized={entry.image.endsWith(".gif")} className="object-cover opacity-65 group-hover:opacity-85 transition-opacity duration-300" />
                   </div>
                 ) : (
                   <p className="text-sm text-text-secondary/70 leading-relaxed line-clamp-2">
