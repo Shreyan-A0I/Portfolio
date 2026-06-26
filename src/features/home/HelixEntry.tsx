@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 const N = 42;
 
@@ -251,6 +252,14 @@ export default function HelixEntry() {
           </p>
         </div>
       </div>
+
+      {/* Detour easter egg */}
+      <Link
+        href="/game"
+        className="absolute bottom-5 right-8 z-10 font-mono text-[10px] tracking-[0.35em] text-white/15 hover:text-[#00E5FF]/40 transition duration-300 uppercase"
+      >
+        [ /game ]
+      </Link>
 
       {/* Enter button */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-end pb-16">
