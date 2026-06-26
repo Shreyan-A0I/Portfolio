@@ -538,9 +538,9 @@ export default function WBCGame() {
       {uiPhase === "gameover" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-5">
           <p className="font-mono text-[10px] tracking-[0.5em] text-red-400/40 uppercase">
-            immune system failure
+            programmed cell death initiated
           </p>
-          <h1 className="font-mono text-5xl font-bold text-red-400 tracking-widest">GAME OVER</h1>
+          <h1 className="font-mono text-5xl font-bold text-red-400 tracking-widest">APOPTOSIS</h1>
           <p className="font-mono text-sm text-white/30 tracking-widest mt-1">
             WAVE {String(wave).padStart(2,"0")} · SCORE {String(score).padStart(4,"0")}
           </p>
