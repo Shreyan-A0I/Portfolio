@@ -168,11 +168,11 @@ export default function Home() {
           <p className="mb-8 hud-text text-xs uppercase tracking-widest text-text-secondary/50">Background</p>
           <div className="space-y-5 text-text-secondary leading-relaxed">
             <p>
-              I grew up in a house of doctors. My mom&apos;s a cancer pathologist — I&apos;d trail
-              her through the lab and hospital corridors. Dad coming home, cleaning surgical
-              instruments, talking robotic systems. Medicine was never abstract to me. When I
-              found computation, it felt like a second lens for the same class of problems —
-              high stakes, messy data, real consequences.
+              I grew up in a house of doctors — strolling behind my mom (a cancer pathologist)
+              through labs and hospital corridors, watching dad clean his surgical instruments
+              after a long day and chat about cameras, robotic systems; medicine was never
+              abstract to me. When I found computation, it felt like a second lens for the same
+              class of problems — high stakes, messy data, real consequences.
             </p>
             <p>
               My first real taste of clinical AI came at{" "}
