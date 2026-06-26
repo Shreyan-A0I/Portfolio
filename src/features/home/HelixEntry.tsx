@@ -241,19 +241,13 @@ export default function HelixEntry() {
         className="absolute inset-0 z-10 flex items-center justify-between px-8 sm:px-20 pointer-events-none"
       >
         <div>
-          <p className="font-mono text-[14px] tracking-[0.6em] text-[#00E5FF]/45 uppercase mb-1">
+          <p className="font-mono text-[26px] tracking-[0.6em] text-[#00E5FF]/45 uppercase">
             Biology
-          </p>
-          <p className="font-mono text-[11px] text-[#00E5FF]/20 tracking-widest">
-            A · T · G · C
           </p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-[14px] tracking-[0.6em] text-white/30 uppercase mb-1">
+          <p className="font-mono text-[26px] tracking-[0.6em] text-white/30 uppercase">
             Compute
-          </p>
-          <p className="font-mono text-[11px] text-white/15 tracking-widest">
-            0xFF · 0x1A · …
           </p>
         </div>
       </div>
@@ -262,7 +256,7 @@ export default function HelixEntry() {
       <div className="relative z-10 flex flex-1 flex-col items-center justify-end pb-16">
         <button
           onClick={enter}
-          className="group relative font-mono uppercase tracking-[0.35em] text-sm
+          className="group relative font-mono uppercase tracking-[0.35em] text-xl
             border border-[#00E5FF]/25 bg-[#00E5FF]/5 px-10 py-4
             text-[#00E5FF]/60 transition-all duration-300
             hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/10 hover:text-[#00E5FF]
