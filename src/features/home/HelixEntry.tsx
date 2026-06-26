@@ -224,7 +224,7 @@ export default function HelixEntry() {
         exiting ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" style={{ pointerEvents: "none" }} />
 
       {/* Top identity */}
       <div className="relative z-10 px-8 pt-10 sm:px-14">
@@ -256,7 +256,10 @@ export default function HelixEntry() {
       {/* Detour easter egg */}
       <Link
         href="/game"
-        className="absolute bottom-5 right-8 z-10 font-mono text-[10px] tracking-[0.35em] text-white/15 hover:text-[#00E5FF]/40 transition duration-300 uppercase"
+        className="absolute bottom-6 right-8 z-10 font-mono text-xs tracking-[0.3em] uppercase
+          text-white/35 hover:text-[#00E5FF]/80
+          border border-white/10 hover:border-[#00E5FF]/40
+          px-3 py-1.5 transition-all duration-200"
       >
         [ /game ]
       </Link>
