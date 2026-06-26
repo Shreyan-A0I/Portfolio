@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Old reference project — not part of this build
+    "reference2/**",
   ]),
 ]);
 

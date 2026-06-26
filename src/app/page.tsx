@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import SectionHeader from "@/components/shared/SectionHeader";
 import Tag from "@/components/shared/Tag";
 import ProjectCard from "@/components/projects/ProjectCard";
@@ -165,8 +166,8 @@ export default function Home() {
                   {entry.title}
                 </p>
                 {entry.image ? (
-                  <div className="mt-2 rounded-lg overflow-hidden h-28">
-                    <img src={entry.image} alt={entry.title} className="w-full h-full object-cover opacity-65 group-hover:opacity-85 transition-opacity duration-300" />
+                  <div className="mt-2 rounded-lg overflow-hidden h-28 relative">
+                    <Image src={entry.image} alt={entry.title} fill unoptimized={entry.image.endsWith(".gif")} className="object-cover opacity-65 group-hover:opacity-85 transition-opacity duration-300" />
                   </div>
                 ) : (
                   <p className="text-sm text-text-secondary/70 leading-relaxed line-clamp-2">

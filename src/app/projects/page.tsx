@@ -19,7 +19,7 @@ export default function ProjectsPage() {
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projectCatalog.map((project, index) => (
+          {projectCatalog.map((project) => (
             <ProjectCard
               key={project.slug}
               slug={project.slug}

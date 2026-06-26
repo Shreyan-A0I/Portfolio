@@ -46,7 +46,7 @@ function drawWBC(ctx: CanvasRenderingContext2D, x: number, y: number, t: number)
     const w = 1 + 0.08 * Math.sin(a * 3 + t * 1.6) + 0.04 * Math.sin(a * 5 - t * 2.1);
     const rx = x + Math.cos(a) * WBC_R * w;
     const ry = y + Math.sin(a) * WBC_R * w;
-    i === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
+    if (i === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry);
   }
   ctx.closePath();
   ctx.fillStyle = BIO + "1a"; ctx.fill();
@@ -113,8 +113,8 @@ function drawToxin(ctx: CanvasRenderingContext2D, t: Toxin, animT: number) {
   for (let i = 0; i < spikes * 2; i++) {
     const a = (i / (spikes * 2)) * Math.PI * 2 - Math.PI / 2;
     const r = i % 2 === 0 ? t.r : t.r * 0.42;
-    i === 0 ? ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r)
-             : ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+    if (i === 0) ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r);
+    else ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
   }
   ctx.closePath();
   ctx.fillStyle = TOXIN_C + "99"; ctx.fill();
@@ -197,7 +197,7 @@ function spawnToxins(wave: number, w: number, h: number, px: number, py: number)
 let _pickupId = 0;
 function spawnPickups(w: number, h: number, px: number, py: number): Pickup[] {
   const types: BuffType[] = ["speed", "shield", "shoot"];
-  return Array.from({ length: 2 }, (_, i) => {
+  return Array.from({ length: 2 }, () => {
     let x = 0, y = 0;
     do { x = 80 + Math.random()*(w-160); y = 80 + Math.random()*(h-160); }
     while (Math.hypot(x-px, y-py) < 100);

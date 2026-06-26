@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import Link from "next/link";
 
 // ── Helix constants ──────────────────────────────────────────────────────────
 const N          = 22;
@@ -156,12 +157,12 @@ export default function TranscriptionHero() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <a
+            <Link
               href="/projects"
               className="rounded-sm border border-[#00E5FF]/40 px-5 py-2.5 font-mono text-xs text-[#00E5FF] transition hover:border-[#00E5FF] hover:bg-[#00E5FF]/10"
             >
               /projects
-            </a>
+            </Link>
             <a
               href="/resume"
               className="rounded-sm border border-[#27272a] px-5 py-2.5 font-mono text-xs text-white/40 transition hover:border-white/30 hover:text-white/70"

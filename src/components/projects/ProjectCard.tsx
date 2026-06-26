@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import Tag from '@/components/shared/Tag';
 import { getProjectGradient } from '@/lib/project-color';
@@ -45,10 +46,11 @@ export default function ProjectCard({
           }`}
         >
           {thumbnail && (
-            <img
+            <Image
               src={thumbnail}
               alt={title}
-              className="w-full h-full object-cover opacity-80"
+              fill
+              className="object-cover opacity-80"
             />
           )}
           {/* Overlay */}
