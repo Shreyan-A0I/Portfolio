@@ -39,7 +39,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["PyTorch", "NAFNet", "DDPM", "Diffusion Models", "Expansion Microscopy", "WandB", "Python"],
     title: "NuStain — Virtual Staining for Expansion Microscopy",
-    thumbnail: "/thumb-nustain.png",
+    thumbnail: "/thumb-nustain.jpg",
   },
   {
     category: "CLINICAL AI",
