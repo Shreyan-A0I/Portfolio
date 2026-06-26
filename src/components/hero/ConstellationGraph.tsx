@@ -159,18 +159,18 @@ export default function ConstellationGraph() {
             {/* outer ring */}
             <circle
               cx={node.x} cy={node.y}
-              r={isActive ? 9 : 7}
+              r={isActive ? 13 : 10}
               fill="none"
               stroke={node.color}
-              strokeWidth={0.7}
-              opacity={isActive ? 0.4 : 0.1}
+              strokeWidth={0.8}
+              opacity={isActive ? 0.4 : 0.12}
               style={{ transition: "r 180ms ease-out, opacity 180ms" }}
             />
 
             {/* dot */}
             <circle
               cx={node.x} cy={node.y}
-              r={isActive ? 5.5 : 4}
+              r={isActive ? 7.5 : 5.5}
               fill={node.color}
               style={{ transition: "r 180ms ease-out" }}
             />
@@ -180,7 +180,7 @@ export default function ConstellationGraph() {
               x={lp.lx} y={lp.ly}
               textAnchor={lp.anchor}
               fill={isActive ? "#e8e4df" : "#787880"}
-              fontSize={10}
+              fontSize={12}
               fontFamily="ui-monospace,monospace"
               fontWeight={isActive ? "600" : "400"}
               style={{ transition: "fill 200ms" }}
@@ -193,7 +193,7 @@ export default function ConstellationGraph() {
               x={lp.sx} y={lp.sy}
               textAnchor={lp.anchor}
               fill={isActive ? node.color : "#3a3a42"}
-              fontSize={8}
+              fontSize={9.5}
               fontFamily="ui-monospace,monospace"
               style={{ transition: "fill 200ms" }}
             >
