@@ -125,11 +125,11 @@ export const projectCatalog: ProjectCatalogEntry[] = [
   {
     category: "FEDERATED LEARNING",
     description:
-      "Multimodal federated learning fusing WSI + RNA-seq encoders to stratify cancer patients into risk clusters. Best Collaboration Award.",
+      "Multimodal federated learning pipeline fusing WSI + RNA-seq encoders for cancer risk stratification. Built for NVIDIA's federated learning biohackathon. Best Collaboration Award.",
     longDescription:
-      "MUFFLE (Multimodal Framework for Federated Learning) is a privacy-preserving cancer risk stratification system built with NVFlare. It fuses Whole Slide Image encoders with RNA-seq encoders via a gated attention mechanism, trained across federated sites without centralizing patient data. Led technical design for an 11-person team.",
+      "MUFFLE (Multimodal Framework for Federated Learning) is a privacy-preserving cancer risk stratification system built for NVIDIA's federated learning biohackathon. Fuses Whole Slide Image encoders with RNA-seq encoders via a gated attention mechanism, trained across federated sites without centralizing patient data. Led technical design for an 11-person team.",
     highlights: [
-      "Best Collaboration Award at the federated learning competition",
+      "Best Collaboration Award at NVIDIA's federated learning biohackathon",
       "Gated attention fusion mechanism for WSI + RNA-seq modality correlation",
       "3 distinct patient risk clusters from multimodal stratification",
       "NVFlare + AWS S3 data standardization across federated sites",

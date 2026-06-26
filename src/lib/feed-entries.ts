@@ -38,10 +38,10 @@ export const feedEntries: FeedEntry[] = [
   {
     date: "2026-01",
     tag: "hackathon",
-    title: "MUFFLE at CHIMERA — the best decisions came from asking obvious questions",
+    title: "NVIDIA biohackathon — the best decisions came from asking stupid-simple questions",
     paragraphs: [
-      "CHIMERA was NVIDIA's federated learning biohackathon — 11-person team, multimodal WSI + RNA-seq fusion for bladder cancer risk stratification. We called ourselves MUFFLE. Won Best Collaboration Award.",
-      "The thing I remember most wasn't the architecture. It was that asking mentors blunt, simple questions — 'what would you actually do here?', 'what's the fastest path to something that works?' — consistently produced better answers than long internal debates. Our gated attention approach for modality fusion came from a 5-minute conversation. Most of the good decisions that weekend did.",
+      "NVIDIA ran a federated learning biohackathon focused on privacy-preserving multi-site cancer research. Our team MUFFLE built a multimodal pipeline — WSI encoders fused with RNA-seq encoders via gated attention. Won Best Collaboration Award.",
+      "The thing I remember most wasn't the model. It was that asking mentors blunt, obvious questions — 'what would you actually do here?', 'what's the fastest path to something that works?' — consistently produced better answers than hours of internal deliberation. The gated attention fusion idea came from a 5-minute conversation. Most of the good decisions that weekend did.",
     ],
     image: "/nvidia-biohackathon.jpeg",
   },

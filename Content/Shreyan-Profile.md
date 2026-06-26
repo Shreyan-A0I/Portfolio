@@ -25,7 +25,7 @@
 
 ## The Origin Story
 
-Both parents are doctors — mother is a laparoscopic gynecologist, father is a pathologist. Growing up, biology wasn't abstract; it was dinner-table conversation. When Shreyan found computation, he found a second lens for the same kind of problems: high-stakes, complex data, real consequences.
+Both parents are doctors — mother is a cancer pathologist, father is a laparoscopic gynecologist. Growing up, biology wasn't abstract; it was dinner-table conversation. When Shreyan found computation, he found a second lens for the same kind of problems: high-stakes, complex data, real consequences.
 
 He stays in comp bio because the data is unlike anything else in ML. Metabolite maps of tumor boundaries, mitochondrial variant phenotype signatures, diffusion models synthesizing stains that don't physically exist yet. These problems demand domain respect alongside engineering rigor. There's also a longer arc: high-impact work in cancer detection or drug discovery is a future he's drawn to.
 
@@ -36,11 +36,12 @@ In his own words: *"I like comp bio because I get to deal with complex data and 
 ## Work Experience
 
 ### Research Assistant — Zhao Biophotonics Lab, CMU (Jan 2026 – present)
-- Building diffusion models for **in-silico fluorescence multiplexing** (project: NuStain)
-- FiLM-conditioned DDPM that synthesizes multiplexed tissue stain channels from a single brightfield input
-- Goal: let microscopes see more than their hardware allows
+- Building **NuStain**: virtual fluorescence multiplexing on MAGNIFY expansion microscopy protocol
+- Primary model: NAFNet regression; DDPM (diffusion) explored as generative alternative
+- Predicts fluorescent marker channels from NHS structural stain alone (one imaging pass → full multiplexed panel)
+- Goal: circumvent the multiplexing limit the way MAGNIFY circumvents the diffraction limit
 
-### AI Integration Engineer — Vyuhaa Med Data, Hyderabad (Jan 2026 – present, alongside masters)
+### AI Integration Engineer — Vyuhaa Med Data, Hyderabad (internship: ~2025, continued remotely)
 *(Vyuhaa's mission: digitize pathology and enhance it with AI)*
 
 **CerviAI — Cervical Cancer Detection Pipeline** (Shreyan's main ownership):
@@ -98,8 +99,9 @@ In his own words: *"I like comp bio because I get to deal with complex data and 
 | CerviAI | YOLOv11 cervical cancer WSI pipeline | 90% precision, 10× recall |
 | MitoGraph / Mitomap | GATv2 mitochondrial VUS pathogenicity | AUPRC 0.830, [live app](https://mitomap-app.vercel.app/) |
 | SPARTA | MALDI-MSI metabolic spatial mapping | 100+ metabolites, tumor boundary segmentation |
-| MUFFLE | Federated learning WSI + RNA-seq | Best Collaboration award |
-| Jetson Optimization | WSI pipeline on edge hardware | 6× latency reduction |
+| MUFFLE | Federated learning WSI + RNA-seq (NVIDIA biohackathon) | Best Collaboration Award |
+| AWAP 2026 | Multi-agent Overcooked solver (CMU competition) | 3rd / ~80 teams |
+| This For That | Sustainable food alternatives app | [live](https://thisorthatfood.netlify.app/) |
 | spotNUMT | NUMT detection tool | [HuggingFace space](https://huggingface.co/spaces/shwew/spotNUMT) |
 | INV-SHAF | Invariant Spatial Histology Analysis Framework | collab w/ Dylan Setiawan |
 | Flu-Var | VAR/Granger influenza causal analysis | Wind speed Granger-causes Influenza B in Qatar (p<0.05) |
