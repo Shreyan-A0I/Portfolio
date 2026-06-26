@@ -6,6 +6,7 @@ import ProjectCard from "@/components/projects/ProjectCard";
 import ConstellationGraph from "@/components/hero/ConstellationGraph";
 import HelixEntry from "@/features/home/HelixEntry";
 import { projectCatalog } from "@/lib/project-catalog";
+import { feedEntries } from "@/lib/feed-entries";
 import { seo } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -131,6 +132,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Feed preview ── */}
+      <section className="px-6 py-16 sm:px-10 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-baseline justify-between mb-8">
+            <p className="hud-text text-xs uppercase tracking-widest text-text-secondary/50">From the feed</p>
+            <Link href="/feed" className="text-sm text-accent-amber hover:underline underline-offset-4">
+              see all →
+            </Link>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {feedEntries.slice(0, 3).map((entry, i) => (
+              <Link key={i} href="/feed" className="group block rounded-xl border border-border-subtle bg-card/30 p-5 transition hover:border-accent-amber/40 hover:bg-card/60">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="hud-text text-xs text-text-secondary/40 uppercase tracking-widest">{entry.date}</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full border border-border-subtle text-text-secondary/50">{entry.tag}</span>
+                </div>
+                <p className="text-base font-semibold text-text-primary leading-snug mb-2 group-hover:text-accent-amber transition-colors">
+                  {entry.title}
+                </p>
+                {!entry.gif && (
+                  <p className="text-sm text-text-secondary/70 leading-relaxed line-clamp-2">
+                    {entry.paragraphs[0]}
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Background ── */}
       <section className="px-6 py-16 sm:px-10 lg:px-12">
         <div className="mx-auto max-w-3xl">
@@ -170,7 +201,7 @@ export default function Home() {
       <section className="editorial-panel mx-6 rounded-2xl px-8 py-12 sm:mx-10 lg:mx-12">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 text-3xl font-bold text-text-primary">
-            want to talk?
+            find me here
           </h2>
           <p className="mb-8 text-text-secondary">
             if you&apos;re working on something interesting, reach out.

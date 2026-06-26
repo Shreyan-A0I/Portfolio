@@ -176,7 +176,7 @@ export default function HelixEntry() {
 
       for (const node of allNodes) {
         const alpha   = depthAlpha(node.z);
-        const r       = (node.strand === 1 ? 5.5 : 4.5) * node.scale;
+        const r       = (node.strand === 1 ? 8.5 : 7.0) * node.scale;
         const color   = node.strand === 1 ? BIO_COLOR : COMP_COLOR;
         const cx      = node.strand === 1 ? LEFT_CX : RIGHT_CX;
         const isFront = node.z < -maxZ * 0.3;
@@ -190,8 +190,8 @@ export default function HelixEntry() {
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        if (r > 3.5) {
-          const fs = Math.max(7, (node.strand === 1 ? 10 : 8) * node.scale);
+        if (r > 4) {
+          const fs = Math.max(9, (node.strand === 1 ? 12 : 10) * node.scale);
           ctx.font         = `${fs}px "Courier New", monospace`;
           ctx.fillStyle    = color;
           ctx.textBaseline = "middle";
@@ -227,10 +227,10 @@ export default function HelixEntry() {
 
       {/* Top identity */}
       <div className="relative z-10 px-8 pt-10 sm:px-14">
-        <p className="font-mono text-[10px] tracking-[0.5em] text-white/20 uppercase">
+        <p className="font-mono text-[13px] tracking-[0.5em] text-white/20 uppercase">
           Shreyan Balaji Nalwad
         </p>
-        <p className="mt-1 font-mono text-[10px] text-[#00E5FF]/25 tracking-widest">
+        <p className="mt-1 font-mono text-[12px] text-[#00E5FF]/25 tracking-widest">
           {'[CMU_CompBio] :: Zhao Biophotonics Lab'}
         </p>
       </div>
@@ -241,18 +241,18 @@ export default function HelixEntry() {
         className="absolute inset-0 z-10 flex items-center justify-between px-8 sm:px-20 pointer-events-none"
       >
         <div>
-          <p className="font-mono text-[11px] tracking-[0.6em] text-[#00E5FF]/45 uppercase mb-1">
+          <p className="font-mono text-[14px] tracking-[0.6em] text-[#00E5FF]/45 uppercase mb-1">
             Biology
           </p>
-          <p className="font-mono text-[9px] text-[#00E5FF]/20 tracking-widest">
+          <p className="font-mono text-[11px] text-[#00E5FF]/20 tracking-widest">
             A · T · G · C
           </p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-[11px] tracking-[0.6em] text-white/30 uppercase mb-1">
+          <p className="font-mono text-[14px] tracking-[0.6em] text-white/30 uppercase mb-1">
             Compute
           </p>
-          <p className="font-mono text-[9px] text-white/15 tracking-widest">
+          <p className="font-mono text-[11px] text-white/15 tracking-widest">
             0xFF · 0x1A · …
           </p>
         </div>
@@ -275,7 +275,7 @@ export default function HelixEntry() {
           <span className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#00E5FF]/50 -translate-x-px translate-y-px" />
           <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00E5FF]/50 translate-x-px translate-y-px" />
         </button>
-        <p className="mt-4 font-mono text-[9px] tracking-[0.4em] text-white/15 uppercase">
+        <p className="mt-4 font-mono text-[11px] tracking-[0.4em] text-white/15 uppercase">
           biology · compute · systems
         </p>
       </div>
