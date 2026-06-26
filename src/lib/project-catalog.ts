@@ -121,6 +121,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "research",
     tech: ["VAR", "Granger Causality", "IRF", "Go", "R", "Shiny", "Python", "WHO/NOAA Data"],
     title: "Influenza VAR Modeling",
+    thumbnail: "/thumb-flu-var.jpg",
   },
   {
     category: "FEDERATED LEARNING",
