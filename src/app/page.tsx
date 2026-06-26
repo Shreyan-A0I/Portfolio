@@ -49,11 +49,11 @@ export default function Home() {
 
               <div className="mb-8 flex flex-wrap gap-2">
                 {[
-                  "Generative AI",
+                  "Clinical AI",
+                  "Generative Models",
                   "Graph ML",
-                  "Spatial Omics",
-                  "Edge Inference",
-                  "Sequence ML",
+                  "Spatial Biology",
+                  "Active Learning",
                 ].map((tag) => (
                   <span
                     key={tag}
