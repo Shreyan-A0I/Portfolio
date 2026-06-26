@@ -80,6 +80,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "research",
     tech: ["PyTorch", "Vision Transformers (ViT)", "CNN", "Medical Imaging", "Python"],
     title: "Hybrid CNN-ViT for Diabetic Retinopathy",
+    thumbnail: "/thumb-hybrid.png",
   },
   {
     category: "SPATIAL OMICS",
@@ -99,6 +100,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["Streamlit", "pyimzML", "METASPACE", "MALDI-MSI", "Python", "Scientific Computing"],
     title: "SPARTA - Spatial Omics Analysis",
+    thumbnail: "/thumb-sparta.jpeg",
   },
   {
     category: "EPIDEMIOLOGY",
@@ -139,6 +141,7 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     status: "ongoing",
     tech: ["NVFlare", "Federated Learning", "PyTorch", "AWS S3", "RNA-seq", "WSI", "Gated Attention"],
     title: "MUFFLE - Multimodal Federated Learning",
+    thumbnail: "/thumb-muffle.png",
   },
   {
     category: "GRAPH ML",

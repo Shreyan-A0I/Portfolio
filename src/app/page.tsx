@@ -118,6 +118,7 @@ export default function Home() {
                 headlineMetric={project.headlineMetric}
                 tech={project.tech}
                 category={project.category}
+                thumbnail={project.thumbnail}
               />
             ))}
           </div>

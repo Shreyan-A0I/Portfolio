@@ -28,6 +28,7 @@ export default function ProjectsPage() {
               headlineMetric={project.headlineMetric}
               tech={project.tech}
               category={project.category}
+              thumbnail={project.thumbnail}
             />
           ))}
         </div>
