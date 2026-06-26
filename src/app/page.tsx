@@ -88,6 +88,16 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Mobile domain cloud — shown instead of graph */}
+            <div className="lg:hidden mt-2">
+              <p className="hud-text text-[10px] uppercase tracking-widest text-text-secondary/30 mb-2">domains</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["Clinical Imaging","Spatial Biology","Graph ML","Federated Learning","Generative AI","Computer Vision","Edge Inference","Active Learning","Sequence ML"].map(d => (
+                  <span key={d} className="rounded-full border border-border-subtle px-2.5 py-0.5 text-[11px] text-text-secondary/45 hud-text">{d}</span>
+                ))}
+              </div>
+            </div>
+
             {/* ── Constellation ── */}
             <div className="hidden lg:flex flex-col items-center gap-4">
               <ConstellationGraph />
@@ -119,6 +129,8 @@ export default function Home() {
                 tech={project.tech}
                 category={project.category}
                 thumbnail={project.thumbnail}
+                github={project.github}
+                demo={project.demo}
               />
             ))}
           </div>
@@ -152,7 +164,11 @@ export default function Home() {
                 <p className="text-base font-semibold text-text-primary leading-snug mb-2 group-hover:text-accent-amber transition-colors">
                   {entry.title}
                 </p>
-                {!entry.image && (
+                {entry.image ? (
+                  <div className="mt-2 rounded-lg overflow-hidden h-28">
+                    <img src={entry.image} alt={entry.title} className="w-full h-full object-cover opacity-65 group-hover:opacity-85 transition-opacity duration-300" />
+                  </div>
+                ) : (
                   <p className="text-sm text-text-secondary/70 leading-relaxed line-clamp-2">
                     {entry.paragraphs[0]}
                   </p>

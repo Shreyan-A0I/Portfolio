@@ -13,6 +13,8 @@ interface ProjectCardProps {
   tech: string[];
   thumbnail?: string;
   category: string;
+  github?: string;
+  demo?: string;
 }
 
 export default function ProjectCard({
@@ -23,6 +25,8 @@ export default function ProjectCard({
   tech,
   thumbnail,
   category,
+  github,
+  demo,
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -89,12 +93,31 @@ export default function ProjectCard({
             )}
           </div>
 
-          {/* View Details Link */}
-          <div className="mt-4 inline-flex items-center text-accent-amber text-base font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            View Details
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <div className="mt-4 flex items-center justify-between">
+            <div className="inline-flex items-center text-accent-amber text-base font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              View Details
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+            {(github || demo) && (
+              <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {github && (
+                  <a href={github} target="_blank" rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="font-mono text-xs text-text-secondary hover:text-text-primary transition">
+                    github ↗
+                  </a>
+                )}
+                {demo && (
+                  <a href={demo} target="_blank" rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="font-mono text-xs text-text-secondary hover:text-accent-amber transition">
+                    live ↗
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

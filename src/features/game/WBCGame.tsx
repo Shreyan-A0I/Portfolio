@@ -30,6 +30,10 @@ interface Projectile {
 type BuffType = "speed" | "shield" | "shoot";
 interface Pickup { id: number; x: number; y: number; type: BuffType; }
 interface ActiveBuff { type: BuffType; expiresAt: number; }
+interface Particle {
+  x: number; y: number; vx: number; vy: number;
+  life: number; color: string;
+}
 type Phase = "intro" | "playing" | "waveclear" | "gameover";
 
 // ─── draw helpers
@@ -143,6 +147,16 @@ function drawPickup(ctx: CanvasRenderingContext2D, p: Pickup, t: number) {
   ctx.restore();
 }
 
+function drawParticle(ctx: CanvasRenderingContext2D, p: Particle) {
+  ctx.save();
+  ctx.globalAlpha = p.life;
+  ctx.shadowBlur = 5; ctx.shadowColor = p.color;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 2.5 * p.life, 0, Math.PI * 2);
+  ctx.fillStyle = p.color; ctx.fill();
+  ctx.restore();
+}
+
 function drawProjectile(ctx: CanvasRenderingContext2D, p: Projectile) {
   ctx.save();
   ctx.shadowBlur = 10; ctx.shadowColor = VIRU_C;
@@ -191,6 +205,10 @@ function spawnPickups(w: number, h: number, px: number, py: number): Pickup[] {
   });
 }
 
+const LS_KEY = "phagocyte-best";
+function getBest() { try { return parseInt(localStorage.getItem(LS_KEY) || "0"); } catch { return 0; } }
+function saveBest(s: number) { try { localStorage.setItem(LS_KEY, String(s)); } catch {} }
+
 // ─── component
 export default function WBCGame() {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
@@ -199,14 +217,15 @@ export default function WBCGame() {
   const toxinsRef    = useRef<Toxin[]>([]);
   const pickupsRef   = useRef<Pickup[]>([]);
   const projectilesRef = useRef<Projectile[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
   const buffsRef     = useRef<ActiveBuff[]>([]);
   const keysRef      = useRef(new Set<string>());
   const tRef         = useRef(0);
   const waveRef      = useRef(1);
   const scoreRef     = useRef(0);
   const livesRef     = useRef(3);
-  const iframesRef   = useRef(0);   // invincibility seconds remaining
-  const flashRef     = useRef(0);   // damage flash remaining
+  const iframesRef   = useRef(0);
+  const flashRef     = useRef(0);
   const shootTimerRef = useRef(0);
   const phaseRef     = useRef<Phase>("intro");
   const wRef         = useRef(0);
@@ -217,17 +236,19 @@ export default function WBCGame() {
   const [score,       setScore]       = useState(0);
   const [wave,        setWave]        = useState(1);
   const [lives,       setLives]       = useState(3);
+  const [bestScore,   setBestScore]   = useState(0);
   const [activeBuffs, setActiveBuffs] = useState<BuffType[]>([]);
 
   function startGame() {
     const w = wRef.current, h = hRef.current;
     scoreRef.current  = 0; waveRef.current = 1; livesRef.current = 3;
     iframesRef.current = 0; flashRef.current = 0; shootTimerRef.current = 0;
-    buffsRef.current  = []; projectilesRef.current = [];
+    buffsRef.current  = []; projectilesRef.current = []; particlesRef.current = [];
     playerRef.current = { x: w/2, y: h/2 };
     pathRef.current    = spawnWave(1, w, h, w/2, h/2);
     toxinsRef.current  = [];
     pickupsRef.current = spawnPickups(w, h, w/2, h/2);
+    setBestScore(getBest());
     setScore(0); setWave(1); setLives(3); setActiveBuffs([]);
     phaseRef.current = "playing";
     setUiPhase("playing");
@@ -319,6 +340,15 @@ export default function WBCGame() {
           if (Math.hypot(playerRef.current.x-p.x, playerRef.current.y-p.y) < WBC_R+p.r-6) eaten.push(i);
         }
         if (eaten.length) {
+          for (const idx of eaten) {
+            const ep = pathRef.current[idx];
+            for (let j = 0; j < 7; j++) {
+              const a = Math.random() * Math.PI * 2, spd = 55 + Math.random() * 85;
+              particlesRef.current.push({ x: ep.x, y: ep.y,
+                vx: Math.cos(a)*spd, vy: Math.sin(a)*spd,
+                life: 1, color: ep.type === "bacteria" ? BACT_C : VIRU_C });
+            }
+          }
           pathRef.current = pathRef.current.filter((_,i) => !eaten.includes(i));
           scoreRef.current += eaten.length;
           setScore(scoreRef.current);
@@ -347,7 +377,12 @@ export default function WBCGame() {
               setLives(livesRef.current);
               iframesRef.current = 1.5;
               flashRef.current   = 0.35;
-              if (livesRef.current <= 0) { phaseRef.current = "gameover"; setUiPhase("gameover"); }
+              if (livesRef.current <= 0) {
+                phaseRef.current = "gameover"; setUiPhase("gameover");
+                const best = getBest();
+                const newBest = Math.max(scoreRef.current, best);
+                saveBest(newBest); setBestScore(newBest);
+              }
               break;
             }
           }
@@ -420,6 +455,15 @@ export default function WBCGame() {
           }, 1800);
         }
       }
+
+      // ─── update + draw particles
+      particlesRef.current = particlesRef.current.filter(p => {
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.vx *= 0.91; p.vy *= 0.91;
+        p.life -= dt / 0.45;
+        if (p.life > 0) { drawParticle(ctx, p); return true; }
+        return false;
+      });
 
       // ─── render
       for (const p of pickupsRef.current) drawPickup(ctx, p, tRef.current);
@@ -544,6 +588,11 @@ export default function WBCGame() {
           <p className="font-mono text-sm text-white/30 tracking-widest mt-1">
             WAVE {String(wave).padStart(2,"0")} · SCORE {String(score).padStart(4,"0")}
           </p>
+          {bestScore > 0 && (
+            <p className="font-mono text-xs text-white/18 tracking-widest">
+              BEST {String(bestScore).padStart(4,"0")}
+            </p>
+          )}
           <button
             onClick={startGame}
             className="mt-3 font-mono text-sm uppercase tracking-[0.35em]

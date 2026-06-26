@@ -15,6 +15,28 @@ export interface ProjectCatalogEntry {
 }
 
 export const projectCatalog: ProjectCatalogEntry[] = [
+  // ── Ordered by impact ────────────────────────────────────────────────────
+  {
+    category: "CLINICAL AI",
+    description:
+      "End-to-end cervical cancer detection pipeline (YOLOv11, 90% precision, 10× recall) deployed live on a prototype WSI scanner via Jetson Orin Nano — latency cut from 500s to 80s.",
+    longDescription:
+      "Built at Vyuhaa Med Data, CerviAI is a 3-stage clinical pipeline (detection → classification → segmentation) for automated cervical cancer detection on Whole Slide Images, deployed on NVIDIA Jetson Orin Nano for live concurrent inference as the scanner captures slides. Migrated from YOLOv7 to YOLOv11 (90% precision, 10× recall lift). Dropped per-slide latency from 500s to 80s via persistent OpenSlide handles and parallel patch extraction. Formalized an active learning loop with an in-house pathologist oracle.",
+    highlights: [
+      "YOLOv7 → YOLOv11 migration: 90% precision, 10× recall improvement",
+      "500s → 80s latency via persistent OpenSlide handles + parallel patch extraction (6× speedup)",
+      "Live concurrent inference — pipeline processes tiles while scanner is still capturing",
+      "Active learning loop: pathologist oracle → automated training batch generation",
+      "Deployed on NVIDIA Jetson Orin Nano at the clinical edge",
+    ],
+    domains: ["computer-vision", "inference-engineering", "cancer-biology", "medical-imaging"],
+    headlineMetric: "90% precision · 10× recall · 6× edge speedup",
+    slug: "cerviai",
+    status: "shipped",
+    tech: ["YOLOv11", "PyTorch", "OpenSlide", "TensorRT", "Jetson Orin Nano", "Active Learning", "Python"],
+    title: "CerviAI — WSI Pipeline + Edge Deployment",
+    thumbnail: "/thumb-cerviai.png",
+  },
   {
     category: "GENERATIVE AI",
     description:
@@ -42,109 +64,6 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     thumbnail: "/thumb-nustain.jpg",
   },
   {
-    category: "CLINICAL AI",
-    description:
-      "End-to-end cervical cancer detection pipeline (YOLOv11, 90% precision, 10× recall) deployed live on a prototype WSI scanner via Jetson Orin Nano — latency cut from 500s to 80s.",
-    longDescription:
-      "Built at Vyuhaa Med Data, CerviAI is a 3-stage clinical pipeline (detection → classification → segmentation) for automated cervical cancer detection on Whole Slide Images, deployed on NVIDIA Jetson Orin Nano for live concurrent inference as the scanner captures slides. Migrated from YOLOv7 to YOLOv11 (90% precision, 10× recall lift). Dropped per-slide latency from 500s to 80s via persistent OpenSlide handles and parallel patch extraction. Formalized an active learning loop with an in-house pathologist oracle.",
-    highlights: [
-      "YOLOv7 → YOLOv11 migration: 90% precision, 10× recall improvement",
-      "500s → 80s latency via persistent OpenSlide handles + parallel patch extraction (6× speedup)",
-      "Live concurrent inference — pipeline processes tiles while scanner is still capturing",
-      "Active learning loop: pathologist oracle → automated training batch generation",
-      "Deployed on NVIDIA Jetson Orin Nano at the clinical edge",
-    ],
-    domains: ["computer-vision", "inference-engineering", "cancer-biology", "medical-imaging"],
-    headlineMetric: "90% precision · 10× recall · 6× edge speedup",
-    slug: "cerviai",
-    status: "shipped",
-    tech: ["YOLOv11", "PyTorch", "OpenSlide", "TensorRT", "Jetson Orin Nano", "Active Learning", "Python"],
-    title: "CerviAI — WSI Pipeline + Edge Deployment",
-    thumbnail: "/thumb-cerviai.png",
-  },
-  {
-    category: "DEEP LEARNING",
-    description:
-      "First-author published research: sequential CNN + ViT architecture for diabetic retinopathy grading at 87% accuracy.",
-    longDescription:
-      "Designed and published a sequential CNN + Vision Transformer architecture for multi-class diabetic retinopathy grading. CNNs run first for local texture features, then feed into a ViT for global context — a simple but effective coupling that outperforms either architecture alone. Presented at Com-IT-Con 2024 (Taylor & Francis).",
-    highlights: [
-      "87% grading accuracy on diabetic retinopathy classification",
-      "First-author publication presented at Com-IT-Con 2024 (Taylor & Francis)",
-      "Sequential CNN → ViT: local texture then global attention",
-      "Outperforms standalone CNN and ViT baselines individually",
-    ],
-    domains: ["computer-vision", "biological-systems", "medical-imaging", "ophthalmology"],
-    headlineMetric: "87% accuracy · first-author publication",
-    slug: "diabetic-retinopathy",
-    status: "research",
-    tech: ["PyTorch", "Vision Transformers (ViT)", "CNN", "Medical Imaging", "Python"],
-    title: "Hybrid CNN-ViT for Diabetic Retinopathy",
-    thumbnail: "/thumb-hybrid.png",
-  },
-  {
-    category: "SPATIAL OMICS",
-    description:
-      "Streamlit tool for MALDI-MSI spatial metabolomics — intensity-weighted centroid alignment for reproducible metabolic map co-localization.",
-    longDescription:
-      "SPARTA (Spatial Metabolite Alignment and Ratio Temperament Analysis) superimposes metabolic maps from MALDI-MSI experiments using intensity-weighted centroid alignment, preserving spatial variance while enabling principled co-localization analysis. SNR-floor filtering and log2 co-localization logic identify metabolic fronts and tumor boundaries across 100+ METASPACE-annotated metabolites.",
-    highlights: [
-      "100+ METASPACE-annotated metabolites analyzed per tissue section",
-      "Intensity-weighted centroid alignment preserving spatial variance across sections",
-      "SNR-floor filtering + log2 co-localization for metabolic front detection",
-      "Identifies tumor boundaries in spatial metabolomics data",
-    ],
-    domains: ["systems-tooling", "biological-systems", "metabolomics", "cancer-biology", "spatial-omics"],
-    headlineMetric: "100+ metabolites · reproducible spatial analysis",
-    slug: "sparta",
-    status: "research",
-    tech: ["Streamlit", "pyimzML", "METASPACE", "MALDI-MSI", "Python", "Scientific Computing"],
-    title: "SPARTA - Spatial Omics Analysis",
-    thumbnail: "/thumb-sparta.jpeg",
-  },
-  {
-    category: "EPIDEMIOLOGY",
-    description:
-      "VAR + Granger Causality pipeline for flu-weather dynamics. Wind speed Granger-causes Influenza B in Qatar (p < 0.05). Python preprocessing, Go backend, Shiny frontend.",
-    longDescription:
-      "4-person collaborative project (with Rohan Adla, Arrio Gonsalves, Dylan Setiawan) building a full VAR-based computational pipeline for influenza-weather analysis. Python handles preprocessing and EDA; a Go backend runs VAR estimation (OLS), IRF computation, Granger causality testing, and residual bootstrapping for efficiency; a Shiny app serves interactive forecasting and visualization. Tested on WHO influenza surveillance + country-level weather data for Qatar.",
-    highlights: [
-      "Wind speed Granger-causes Influenza B in Qatar (p < 0.05) — no significant causality found for Influenza A",
-      "IRFs show wind speed and precipitation have the largest sustained effect on flu incidence",
-      "Go backend for VAR/Granger/IRF computations; Python preprocessing; Shiny frontend",
-      "Bootstrap uncertainty quantification validating asymptotic model assumptions",
-      "VAR captures seasonal periodicity of both Influenza A and B in Qatar",
-    ],
-    domains: ["graph-causality", "biological-systems", "epidemiology", "causal-inference"],
-    headlineMetric: "Wind speed Granger-causes Flu B · Go + R + Python",
-    slug: "flu-var",
-    status: "research",
-    tech: ["VAR", "Granger Causality", "IRF", "Go", "R", "Shiny", "Python", "WHO/NOAA Data"],
-    title: "Influenza VAR Modeling",
-    thumbnail: "/thumb-flu-var.jpg",
-  },
-  {
-    category: "FEDERATED LEARNING",
-    description:
-      "Multimodal federated learning pipeline fusing WSI + RNA-seq encoders for cancer risk stratification. Built for NVIDIA's federated learning biohackathon. Best Collaboration Award.",
-    longDescription:
-      "MUFFLE (Multimodal Framework for Federated Learning) is a privacy-preserving cancer risk stratification system built for NVIDIA's federated learning biohackathon. Fuses Whole Slide Image encoders with RNA-seq encoders via a gated attention mechanism, trained across federated sites without centralizing patient data. Led technical design for an 11-person team.",
-    highlights: [
-      "Best Collaboration Award at NVIDIA's federated learning biohackathon",
-      "Gated attention fusion mechanism for WSI + RNA-seq modality correlation",
-      "3 distinct patient risk clusters from multimodal stratification",
-      "NVFlare + AWS S3 data standardization across federated sites",
-      "11-person team — led multimodal fusion technical design",
-    ],
-    domains: ["graph-causality", "inference-engineering", "biological-systems", "transcriptomics", "cancer-biology", "medical-imaging"],
-    headlineMetric: "Best Collaboration Award · 3 risk clusters",
-    slug: "muffle",
-    status: "research",
-    tech: ["NVFlare", "Federated Learning", "PyTorch", "AWS S3", "RNA-seq", "WSI", "Gated Attention"],
-    title: "MUFFLE - Multimodal Federated Learning",
-    thumbnail: "/thumb-muffle.png",
-  },
-  {
     category: "GRAPH ML",
     description:
       "Heterogeneous knowledge graph + GATv2 attention network scoring 1,228 mitochondrial Variants of Uncertain Significance across 808 phenotypes.",
@@ -168,25 +87,25 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     demo: "https://mitomap-app.vercel.app/",
   },
   {
-    category: "SEQUENCE MODELING",
+    category: "FEDERATED LEARNING",
     description:
-      "mtDNA vs NuMT sequence classification under severe class imbalance using a CNN-BiLSTM ensemble with AUPRC-optimized training.",
+      "Multimodal federated learning pipeline fusing WSI + RNA-seq encoders for cancer risk stratification. Built for NVIDIA's federated learning biohackathon. Best Collaboration Award.",
     longDescription:
-      "spotNUMT distinguishes authentic mitochondrial DNA sequences from Nuclear Mitochondrial DNA Segments (NuMTs) — ancient mtDNA copies embedded in the nuclear genome. NuMT misclassification silently corrupts downstream genomic analysis. The severe class imbalance makes this a hard problem that naive classifiers fail on.",
+      "MUFFLE (Multimodal Framework for Federated Learning) is a privacy-preserving cancer risk stratification system built for NVIDIA's federated learning biohackathon. Fuses Whole Slide Image encoders with RNA-seq encoders via a gated attention mechanism, trained across federated sites without centralizing patient data. Led technical design for an 11-person team.",
     highlights: [
-      "CNN + BiLSTM ensemble for genomic sequence classification",
-      "Class-weighted training strategy for extreme mtDNA vs NuMT imbalance",
-      "AUPRC as primary metric — correct for skewed class distributions",
-      "Biological motivation: NuMT contamination corrupts downstream genomic pipelines",
+      "Best Collaboration Award at NVIDIA's federated learning biohackathon",
+      "Gated attention fusion mechanism for WSI + RNA-seq modality correlation",
+      "3 distinct patient risk clusters from multimodal stratification",
+      "NVFlare + AWS S3 data standardization across federated sites",
+      "11-person team — led multimodal fusion technical design",
     ],
-    domains: ["inference-engineering", "biological-systems", "mitochondrial-genomics", "sequence-ml"],
-    headlineMetric: "CNN+BiLSTM ensemble · AUPRC-optimized",
-    slug: "spotnumt",
-    status: "shipped",
-    tech: ["PyTorch", "CNN", "BiLSTM", "Genomics", "Sequence Classification", "Gradio", "Python"],
-    title: "spotNUMT - Sequence Classification",
-    thumbnail: "/thumb-spotnumt.jpeg",
-    demo: "https://huggingface.co/spaces/shwew/spotNUMT",
+    domains: ["graph-causality", "inference-engineering", "biological-systems", "transcriptomics", "cancer-biology", "medical-imaging"],
+    headlineMetric: "Best Collaboration Award · 3 risk clusters",
+    slug: "muffle",
+    status: "research",
+    tech: ["NVFlare", "Federated Learning", "PyTorch", "AWS S3", "RNA-seq", "WSI", "Gated Attention"],
+    title: "MUFFLE - Multimodal Federated Learning",
+    thumbnail: "/thumb-muffle.png",
   },
   {
     category: "ACTIVE LEARNING",
@@ -210,6 +129,67 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     thumbnail: "/thumb-invshaf.png",
   },
   {
+    category: "DEEP LEARNING",
+    description:
+      "First-author published research: sequential CNN + ViT architecture for diabetic retinopathy grading at 87% accuracy.",
+    longDescription:
+      "Designed and published a sequential CNN + Vision Transformer architecture for multi-class diabetic retinopathy grading. CNNs run first for local texture features, then feed into a ViT for global context — a simple but effective coupling that outperforms either architecture alone. Presented at Com-IT-Con 2024 (Taylor & Francis).",
+    highlights: [
+      "87% grading accuracy on diabetic retinopathy classification",
+      "First-author publication presented at Com-IT-Con 2024 (Taylor & Francis)",
+      "Sequential CNN → ViT: local texture then global attention",
+      "Outperforms standalone CNN and ViT baselines individually",
+    ],
+    domains: ["computer-vision", "biological-systems", "medical-imaging", "ophthalmology"],
+    headlineMetric: "87% accuracy · first-author publication",
+    slug: "diabetic-retinopathy",
+    status: "research",
+    tech: ["PyTorch", "Vision Transformers (ViT)", "CNN", "Medical Imaging", "Python"],
+    title: "Hybrid CNN-ViT for Diabetic Retinopathy",
+    thumbnail: "/thumb-hybrid.png",
+  },
+  {
+    category: "SEQUENCE MODELING",
+    description:
+      "mtDNA vs NuMT sequence classification under severe class imbalance using a CNN-BiLSTM ensemble with AUPRC-optimized training.",
+    longDescription:
+      "spotNUMT distinguishes authentic mitochondrial DNA sequences from Nuclear Mitochondrial DNA Segments (NuMTs) — ancient mtDNA copies embedded in the nuclear genome. NuMT misclassification silently corrupts downstream genomic analysis. The severe class imbalance makes this a hard problem that naive classifiers fail on.",
+    highlights: [
+      "CNN + BiLSTM ensemble for genomic sequence classification",
+      "Class-weighted training strategy for extreme mtDNA vs NuMT imbalance",
+      "AUPRC as primary metric — correct for skewed class distributions",
+      "Biological motivation: NuMT contamination corrupts downstream genomic pipelines",
+    ],
+    domains: ["inference-engineering", "biological-systems", "mitochondrial-genomics", "sequence-ml"],
+    headlineMetric: "CNN+BiLSTM ensemble · AUPRC-optimized",
+    slug: "spotnumt",
+    status: "shipped",
+    tech: ["PyTorch", "CNN", "BiLSTM", "Genomics", "Sequence Classification", "Gradio", "Python"],
+    title: "spotNUMT - Sequence Classification",
+    thumbnail: "/thumb-spotnumt.jpeg",
+    demo: "https://huggingface.co/spaces/shwew/spotNUMT",
+  },
+  {
+    category: "SPATIAL OMICS",
+    description:
+      "Streamlit tool for MALDI-MSI spatial metabolomics — intensity-weighted centroid alignment for reproducible metabolic map co-localization.",
+    longDescription:
+      "SPARTA (Spatial Metabolite Alignment and Ratio Temperament Analysis) superimposes metabolic maps from MALDI-MSI experiments using intensity-weighted centroid alignment, preserving spatial variance while enabling principled co-localization analysis. SNR-floor filtering and log2 co-localization logic identify metabolic fronts and tumor boundaries across 100+ METASPACE-annotated metabolites.",
+    highlights: [
+      "100+ METASPACE-annotated metabolites analyzed per tissue section",
+      "Intensity-weighted centroid alignment preserving spatial variance across sections",
+      "SNR-floor filtering + log2 co-localization for metabolic front detection",
+      "Identifies tumor boundaries in spatial metabolomics data",
+    ],
+    domains: ["systems-tooling", "biological-systems", "metabolomics", "cancer-biology", "spatial-omics"],
+    headlineMetric: "100+ metabolites · reproducible spatial analysis",
+    slug: "sparta",
+    status: "research",
+    tech: ["Streamlit", "pyimzML", "METASPACE", "MALDI-MSI", "Python", "Scientific Computing"],
+    title: "SPARTA - Spatial Omics Analysis",
+    thumbnail: "/thumb-sparta.jpeg",
+  },
+  {
     category: "TRANSCRIPTOMICS",
     description:
       "ML course project: 5-method scRNA-seq pipeline on real MESA cohort CMV data from CellxGene. KLRD1 surfaces as top NK cell CMV predictor; XGBoost finds gene importance for ethnicity as confound check.",
@@ -229,6 +209,27 @@ export const projectCatalog: ProjectCatalogEntry[] = [
     tech: ["Python", "scanpy", "AnnData", "UMAP", "PCA", "XGBoost", "scikit-learn", "Bayesian Methods"],
     title: "CMV Immune Fingerprint — scRNA-seq",
     thumbnail: "/thumb-cmv.png",
+  },
+  {
+    category: "EPIDEMIOLOGY",
+    description:
+      "VAR + Granger Causality pipeline for flu-weather dynamics. Wind speed Granger-causes Influenza B in Qatar (p < 0.05). Python preprocessing, Go backend, Shiny frontend.",
+    longDescription:
+      "4-person collaborative project (with Rohan Adla, Arrio Gonsalves, Dylan Setiawan) building a full VAR-based computational pipeline for influenza-weather analysis. Python handles preprocessing and EDA; a Go backend runs VAR estimation (OLS), IRF computation, Granger causality testing, and residual bootstrapping for efficiency; a Shiny app serves interactive forecasting and visualization. Tested on WHO influenza surveillance + country-level weather data for Qatar.",
+    highlights: [
+      "Wind speed Granger-causes Influenza B in Qatar (p < 0.05) — no significant causality found for Influenza A",
+      "IRFs show wind speed and precipitation have the largest sustained effect on flu incidence",
+      "Go backend for VAR/Granger/IRF computations; Python preprocessing; Shiny frontend",
+      "Bootstrap uncertainty quantification validating asymptotic model assumptions",
+      "VAR captures seasonal periodicity of both Influenza A and B in Qatar",
+    ],
+    domains: ["graph-causality", "biological-systems", "epidemiology", "causal-inference"],
+    headlineMetric: "Wind speed Granger-causes Flu B · Go + R + Python",
+    slug: "flu-var",
+    status: "research",
+    tech: ["VAR", "Granger Causality", "IRF", "Go", "R", "Shiny", "Python", "WHO/NOAA Data"],
+    title: "Influenza VAR Modeling",
+    thumbnail: "/thumb-flu-var.jpg",
   },
   {
     category: "FULL-STACK",

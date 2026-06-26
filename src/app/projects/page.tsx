@@ -29,6 +29,8 @@ export default function ProjectsPage() {
               tech={project.tech}
               category={project.category}
               thumbnail={project.thumbnail}
+              github={project.github}
+              demo={project.demo}
             />
           ))}
         </div>

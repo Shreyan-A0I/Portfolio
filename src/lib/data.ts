@@ -12,10 +12,10 @@ export const resumeLinks = {
 };
 
 export const seo = {
-    title: "Shreyan Nalwad's Portfolio",
-    description: "Computational Biology & AI Systems Engineer - building across biology, inference systems, and product tooling.",
+    title: "Shreyan Nalwad",
+    description: "MS Computational Biology @ CMU · Zhao Biophotonics Lab · Clinical AI, Generative Models, Graph ML, Spatial Biology.",
     og: {
-        title: "Shreyan Nalwad's Portfolio",
+        title: "Shreyan Nalwad",
         type: "website",
         url: "https://shreyan.dev",
     },

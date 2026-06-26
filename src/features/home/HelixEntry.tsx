@@ -256,7 +256,7 @@ export default function HelixEntry() {
       {/* Detour easter egg */}
       <Link
         href="/game"
-        className="absolute bottom-6 right-8 z-20 font-mono text-xs tracking-[0.3em] uppercase
+        className="animate-soft-pulse absolute bottom-6 right-8 z-20 font-mono text-xs tracking-[0.3em] uppercase
           text-white/35 hover:text-[#00E5FF]/80
           border border-white/10 hover:border-[#00E5FF]/40
           px-3 py-1.5 transition-all duration-200"
