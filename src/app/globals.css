@@ -3,9 +3,9 @@
 :root {
   color-scheme: dark;
 
-  --bg-obsidian: #0f0c14;
-  --bg-surface: #161319;
-  --bg-card: #1e1b23;
+  --bg-obsidian: #131020;
+  --bg-surface: #1a1726;
+  --bg-card: #222030;
   --accent-amber: #d4a053;
   --accent-copper: #c47d3e;
   --text-primary: #e8e4df;
@@ -124,14 +124,10 @@
   body {
     min-height: 100vh;
     background:
-      /* Depth vignette: darkens edges, focal plane draws eye inward */
-      radial-gradient(ellipse 88% 72% at 50% 36%, transparent 20%, rgb(0 0 0 / 0.32) 100%),
-      /* Cyan cap: bridges the splash-screen temperature into the amber site */
-      radial-gradient(ellipse 120% 45vh at 50% -2%, rgb(0 229 255 / 0.055) 0%, transparent 65%),
-      /* Amber body glows — slightly lifted on the warm base */
-      radial-gradient(circle at 18% 14%, rgb(212 160 83 / 0.17), transparent 36%),
-      radial-gradient(circle at 82% 18%, rgb(196 125 62 / 0.14), transparent 40%),
-      linear-gradient(180deg, #0c0a11 0%, var(--bg-obsidian) 42%, #0a0810 100%);
+      /* Subtle cyan tint at top — bridges from splash */
+      radial-gradient(ellipse 100% 40% at 50% 0%, rgb(0 229 255 / 0.04) 0%, transparent 100%),
+      /* Single centered radial: lighter core fades to deeper edges uniformly */
+      radial-gradient(ellipse 80% 60% at 50% 38%, #1c1829 0%, var(--bg-obsidian) 55%, #0d0b18 100%);
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: ui-monospace, "Courier New", monospace;
@@ -257,11 +253,6 @@
   .hero-overlay {
     isolation: isolate;
     position: relative;
-    background:
-      /* Left-side cyan: anchors the bio column to the helix palette */
-      radial-gradient(ellipse 55% 70% at 2% 30%, rgb(0 229 255 / 0.06) 0%, transparent 70%),
-      /* Top-center cyan: continuation of where the splash button sat */
-      radial-gradient(ellipse 60% 35% at 50% 0%, rgb(0 229 255 / 0.035) 0%, transparent 100%);
   }
 
   .hero-overlay::before {
