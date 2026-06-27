@@ -3,9 +3,9 @@
 :root {
   color-scheme: dark;
 
-  --bg-obsidian: #0d0b09;
-  --bg-surface: #151310;
-  --bg-card: #1b1911;
+  --bg-obsidian: #0f0c14;
+  --bg-surface: #161319;
+  --bg-card: #1e1b23;
   --accent-amber: #d4a053;
   --accent-copper: #c47d3e;
   --text-primary: #e8e4df;
@@ -131,7 +131,7 @@
       /* Amber body glows — slightly lifted on the warm base */
       radial-gradient(circle at 18% 14%, rgb(212 160 83 / 0.17), transparent 36%),
       radial-gradient(circle at 82% 18%, rgb(196 125 62 / 0.14), transparent 40%),
-      linear-gradient(180deg, #0b0907 0%, var(--bg-obsidian) 42%, #090706 100%);
+      linear-gradient(180deg, #0c0a11 0%, var(--bg-obsidian) 42%, #0a0810 100%);
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: ui-monospace, "Courier New", monospace;
