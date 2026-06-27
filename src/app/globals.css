@@ -3,9 +3,9 @@
 :root {
   color-scheme: dark;
 
-  --bg-obsidian: #0a0a0b;
-  --bg-surface: #141416;
-  --bg-card: #1a1a1e;
+  --bg-obsidian: #0d0b09;
+  --bg-surface: #151310;
+  --bg-card: #1b1911;
   --accent-amber: #d4a053;
   --accent-copper: #c47d3e;
   --text-primary: #e8e4df;
@@ -124,12 +124,14 @@
   body {
     min-height: 100vh;
     background:
+      /* Depth vignette: darkens edges, focal plane draws eye inward */
+      radial-gradient(ellipse 88% 72% at 50% 36%, transparent 20%, rgb(0 0 0 / 0.32) 100%),
       /* Cyan cap: bridges the splash-screen temperature into the amber site */
       radial-gradient(ellipse 120% 45vh at 50% -2%, rgb(0 229 255 / 0.055) 0%, transparent 65%),
-      /* Amber body glows */
-      radial-gradient(circle at 18% 14%, rgb(212 160 83 / 0.14), transparent 34%),
-      radial-gradient(circle at 82% 18%, rgb(196 125 62 / 0.12), transparent 38%),
-      linear-gradient(180deg, #090909 0%, var(--bg-obsidian) 42%, #070708 100%);
+      /* Amber body glows — slightly lifted on the warm base */
+      radial-gradient(circle at 18% 14%, rgb(212 160 83 / 0.17), transparent 36%),
+      radial-gradient(circle at 82% 18%, rgb(196 125 62 / 0.14), transparent 40%),
+      linear-gradient(180deg, #0b0907 0%, var(--bg-obsidian) 42%, #090706 100%);
     color: var(--text-primary);
     font-family: ui-monospace, "Courier New", monospace;
     font-size: var(--step-0);
